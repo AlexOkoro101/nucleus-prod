@@ -1,0 +1,14 @@
+/* ul li {
+    display: inline-block;
+
+} */
+ul li a {
+    font-size: 14px;
+    color: black;
+    font-weight: 500;
+}
+@media (max-width: 768px) {
+    ul li a {
+        vertical-align: -webkit-baseline-middle;
+    }
+}
