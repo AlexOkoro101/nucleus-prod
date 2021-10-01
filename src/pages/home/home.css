@@ -1,0 +1,33 @@
+.banner {
+    background: url('../../assets/img/home-banner.png');
+}
+.buy-cover-button {
+    background: #663391;
+    border-radius: 30px; 
+    padding: 11px 26px;   
+    color: #fff;
+}
+.transparent-button {
+    border: 2.5px solid #fff;
+    box-sizing: border-box;
+    border-radius: 30px;
+    padding: 11px 26px; 
+    color: #fff;
+}
+.main-button {
+    background: #8E2B8D;
+    border-radius: 30px;
+    color: #fff;
+    padding: 14px 57px;
+}
+.insurance-caption {
+    font-size: 11px;
+    color: #6084A4;
+}
+.read-more {
+    font-size: 11px;
+    color: #663391;
+}
+.color-secondary {
+    color: #6084A4;
+}
