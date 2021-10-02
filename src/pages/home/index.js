@@ -1,5 +1,7 @@
 import React from 'react'
+import CustomerExpectation from '../../components/sections/customer-expectation'
 import InsurancePackage from '../../components/sections/insurance-package'
+import OyoAgency from '../../components/sections/oyo-agency'
 import './home.css'
 
 function Home() {
@@ -20,6 +22,12 @@ function Home() {
 
             {/* insurance info section */}
             <InsurancePackage></InsurancePackage>
+
+            {/* Oyo insurance agency */}
+            <OyoAgency></OyoAgency>
+
+            {/* Customer Expectation */}
+            <CustomerExpectation></CustomerExpectation>
         </div>
     )
 }
