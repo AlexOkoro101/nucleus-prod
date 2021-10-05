@@ -7,6 +7,9 @@
 .color-secondary-2 {
     color: #8E2B8D;
 }
+.color-faded {
+    color: #C4C4C4;
+}
 .bg-primary {
     background-color: #663391;
 }
@@ -36,4 +39,53 @@
     font-size: 16px;
     color: #FFFFFF;
     padding: 11px 31px;
+}
+.form .tab-content {
+    width: 586px;
+    height: 232px;
+    margin: auto;
+    background: #ECECEC;
+    border-radius: 0px 30px 30px 30px;
+    padding: 46px 31px;
+}
+.form .tabs ul {
+    width: 586px;
+    margin: auto;
+    text-align: left;
+}
+.form .tabs ul li {
+    display: inline-block;
+    padding: 16px 46px;
+    font-weight: 500;
+    font-size: 18px;
+    color: #000000;
+}
+.form .tabs ul li.active {
+    background: #ECECEC;
+    border-radius: 30px 30px 0px 0px;
+    color: #663391;
+    font-weight: 600;
+}
+.renew-cover-button {
+    background: #663391;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+    padding: 11px 31px;
+}
+.renew-cover-input {
+    width: 100%;
+    background-color: #E5E5E5;
+    color: #000000;
+    border-radius: 30px;
+    padding: 23px 22px;
+    margin-bottom: 28px;
+    outline: none;
+    font-size: 12px;
+}
+.renew-cover-input::placeholder {
+    font-weight: 500;
+    font-size: 12px;
+    color: #C4C4C4;
 }

@@ -67,7 +67,7 @@ function Individual() {
                             </div>
 
                             <div className="flex  justify-between gap-x-3">
-                                <div className="flex flex-col">
+                                <div className="flex flex-col w-4/12">
                                     <label htmlFor="phone">Phone Number</label>
                                     <input className="input-primary px-6 focus:outline-none" type="text" name="phone" id="phone" />
                                 </div>
@@ -80,7 +80,7 @@ function Individual() {
                             <h1 className="header">Hospital Details</h1>
 
                             <div className="flex justify-between gap-x-3">
-                                <div className="flex flex-col">
+                                <div className="flex flex-col w-4/12">
                                     <label htmlFor="location">Location</label>
                                     <input className="input-primary px-6 focus:outline-none" type="text" name="location" id="location" />
                                 </div>
@@ -92,7 +92,7 @@ function Individual() {
                         </div>
 
                         <div>
-                            <button type="submit" className="individual-btn mt-14 mb-14">Submit</button>
+                            <button type="submit" className="individual-btn mt-14 mb-14 uppercase">Proceed</button>
                         </div>
                         
                     </form>

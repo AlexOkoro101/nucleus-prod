@@ -1,5 +1,6 @@
-.banner {
+.home-banner {
     background: url('../../assets/img/home-banner.png');
+    background-size: cover;
 }
 .buy-cover-button {
     background: #663391;

@@ -4,6 +4,9 @@ import Home from "./pages/home";
 import Footer from "./components/footer";
 import BuyCover from "./pages/buy-cover";
 import Individual from "./pages/plans/individual";
+import Corporate from "./pages/plans/corporate";
+import SME from "./pages/plans/sme";
+import RenewCover from "./pages/plans/renew-cover";
 
 function App() {
   return (
@@ -21,6 +24,15 @@ function App() {
             </Route>
             <Route path="/buy-cover/individual">
               <Individual></Individual>
+            </Route>
+            <Route path="/buy-cover/corporate">
+              <Corporate></Corporate>
+            </Route>
+            <Route path="/buy-cover/sme">
+              <SME></SME>
+            </Route>
+            <Route path="/buy-cover/renew">
+              <RenewCover></RenewCover>
             </Route>
           </Switch>
         </div>
