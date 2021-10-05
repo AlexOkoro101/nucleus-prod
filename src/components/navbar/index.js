@@ -16,7 +16,7 @@ function Navbar() {
     }
 
     return (
-        <div className="font-primary flex justify-between navbar sticky border-b border-gray-200 top-0 bg-white h-16 md:h-24 md:px-40 px-8 items-center">
+        <div className="font-primary flex justify-between navbar sticky border-b border-gray-200 top-0 bg-white h-16 md:h-24 md:px-40 px-8 items-center z-50">
             <div className="flex">
                 <img src={logo} alt="Nucleus Logo" className="w-24 md:w-36" />
             </div>

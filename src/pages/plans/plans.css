@@ -1,0 +1,39 @@
+.color-primary {
+    color: #663391
+}
+.color-secondary {
+    color: #6084A4;
+}
+.color-secondary-2 {
+    color: #8E2B8D;
+}
+.bg-primary {
+    background-color: #663391;
+}
+.bg-secondary {
+    background-color: #6084A4;
+}
+.bg-secondary-2 {
+    background-color: #8E2B8D;
+}
+.header {
+    font-weight: 500;
+    font-size: 24px;
+    color: #663391;
+}
+.input-primary {
+    background: #E5E5E5;
+    border-radius: 30px;
+    height: 64px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000000;
+}
+.individual-btn {
+    background: #663391;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+    padding: 11px 31px;
+}

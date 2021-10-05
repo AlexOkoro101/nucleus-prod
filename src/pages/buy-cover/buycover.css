@@ -1,0 +1,29 @@
+.color-primary {
+    color: #663391
+}
+.color-secondary {
+    color: #6084A4;
+}
+.color-secondary-2 {
+    color: #8E2B8D;
+}
+.bg-primary {
+    background-color: #663391;
+}
+.bg-secondary {
+    background-color: #6084A4;
+}
+.bg-secondary-2 {
+    background-color: #8E2B8D;
+}
+.buycover-cap {
+    font-size: 11px;
+}
+.buycover-getstarted {
+    background: #663391;
+    border-radius: 18px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 9px;
+    padding: 5px 13px;
+}

@@ -2,6 +2,8 @@ import Navbar from "./components/navbar";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from "./pages/home";
 import Footer from "./components/footer";
+import BuyCover from "./pages/buy-cover";
+import Individual from "./pages/plans/individual";
 
 function App() {
   return (
@@ -11,8 +13,14 @@ function App() {
 
         <div className="content">
           <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <Home></Home>
+            </Route>
+            <Route exact path="/buy-cover">
+              <BuyCover></BuyCover>
+            </Route>
+            <Route path="/buy-cover/individual">
+              <Individual></Individual>
             </Route>
           </Switch>
         </div>

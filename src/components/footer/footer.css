@@ -1,0 +1,29 @@
+.footer {
+    background: #F7FAFD;
+}
+.footer .footer-map {
+    background: url('../../assets/img/map.png');
+    border-bottom: 0.5px solid #6084A4;
+    margin-bottom: 31px;
+}
+
+.text-color {
+    color: #6084A4;
+}
+.footer ul li , .footer ul li a {
+    color: #6084A4;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+}
+.footer ul li  {
+    margin-bottom: 10px;
+}
+.copyright {
+    font-weight: 500;
+    font-size: 14px; 
+    color: #6084A4;  
+}
+.copyright span {
+    font-weight: 800;
+}

@@ -2,6 +2,8 @@ import React from 'react'
 import CustomerExpectation from '../../components/sections/customer-expectation'
 import InsurancePackage from '../../components/sections/insurance-package'
 import OyoAgency from '../../components/sections/oyo-agency'
+import ReadyTalk from '../../components/sections/ready-talk'
+import Testimonials from '../../components/sections/testimonials'
 import './home.css'
 
 function Home() {
@@ -28,6 +30,12 @@ function Home() {
 
             {/* Customer Expectation */}
             <CustomerExpectation></CustomerExpectation>
+
+            {/* Testimonies */}
+            <Testimonials></Testimonials>
+
+            {/* Ready to talk */}
+            <ReadyTalk></ReadyTalk>
         </div>
     )
 }
