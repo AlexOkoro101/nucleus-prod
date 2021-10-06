@@ -89,3 +89,22 @@
     font-size: 12px;
     color: #C4C4C4;
 }
+.enrollee-border {
+    height: 71px;
+    width: 2px;
+    background-color: #C4C4C4;
+}
+.plan-price-box {
+    background-color: #663391;
+    width: 127px;
+    height: 127px;
+    border-radius: 30px;
+    text-align: center;
+}
+.plan-duration-box {
+    background-color: #8E2B8D;
+    width: 127px;
+    height: 127px;
+    border-radius: 30px;
+    text-align: center;
+}

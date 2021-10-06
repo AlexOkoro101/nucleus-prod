@@ -1,6 +1,7 @@
 import React from 'react'
 import Banner from './shared/banner'
 import user from '../../assets/img/vector.svg'
+
 import './plans.css'
 
 function SME() {
@@ -59,76 +60,169 @@ function SME() {
 
                                 <h1 className="header mt-9 mb-10">Enrollees</h1>
 
-                                <div className="mb-10">
-                                    <label htmlFor="photo"></label>
-                                    <input className="input-primary px-6" type="file" name="photo" id="photo" className="hidden" />
-                                    <div className="flex gap-x-2 w-2/6 cursor-pointer items-center" onClick={() => {chooseImage()}}>
-                                        <img src={user} alt="db" width="68px" />
-                                        <p className="text-sm font-medium">Tap to upload image</p>
+                                <div className="flex gap-x-8 items-center border-b border-gray-200 pb-14 mb-8">
+                                    <div className="checkbox">
+                                        <input type="checkbox" name="" id="" />
+                                    </div>
+                                    <div>
+                                        <img src={user} alt="" />
+                                    </div>
+                                    <div className="enrollee-border">
+
+                                    </div>
+                                    <div className="flex flex-col gap-y-3">
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">First Name:</p>
+                                                <p className="text-black text-sm font-medium">Peter </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Last Name:</p>
+                                                <p className="text-black text-sm font-medium">Parker</p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Address:</p>
+                                                <p className="text-black text-sm font-medium">6, Ajala street, ikeja, Lagos state</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Gender:</p>
+                                                <p className="text-black text-sm font-medium">Female </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Email:</p>
+                                                <p className="text-black text-sm font-medium">name@example.com</p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Phone:</p>
+                                                <p className="text-black text-sm font-medium">081xxxxxxx</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Hospital:</p>
+                                                <p className="text-black text-sm font-medium">name@example.com </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Plan:</p>
+                                                <p className="text-black text-sm font-medium">Starter Plan</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <svg class="w-6 h-6" fill="none" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     </div>
                                 </div>
 
-                                <div className="flex flex-col gap-y-6">
-                                    <div className="flex justify-between gap-x-3">
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="first-name">First Name</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="first-name" id="first-name" />
+                                <div className="flex gap-x-8 items-center border-b border-gray-200 pb-14 mb-8">
+                                    <div className="checkbox">
+                                        <input type="checkbox" name="" id="" />
+                                    </div>
+                                    <div>
+                                        <img src={user} alt="" />
+                                    </div>
+                                    <div className="enrollee-border">
+
+                                    </div>
+                                    <div className="flex flex-col gap-y-3">
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">First Name:</p>
+                                                <p className="text-black text-sm font-medium">Peter </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Last Name:</p>
+                                                <p className="text-black text-sm font-medium">Parker</p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Address:</p>
+                                                <p className="text-black text-sm font-medium">6, Ajala street, ikeja, Lagos state</p>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="last-name">Last Name</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="last-name" id="last-name" />
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Gender:</p>
+                                                <p className="text-black text-sm font-medium">Female </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Email:</p>
+                                                <p className="text-black text-sm font-medium">name@example.com</p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Phone:</p>
+                                                <p className="text-black text-sm font-medium">081xxxxxxx</p>
+                                            </div>
                                         </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="email">Email</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="email" name="email" id="email" />
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Hospital:</p>
+                                                <p className="text-black text-sm font-medium">name@example.com </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Plan:</p>
+                                                <p className="text-black text-sm font-medium">Starter Plan</p>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div className="flex justify-between gap-x-3">
-                                        <div className="flex flex-col w-4/12">
-                                            <label htmlFor="enrollee-company-phone">Company Phone No.</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="enrollee-company-phone" id="enrollee-company-phone" />
-                                        </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="dob">D.O.B</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="dob" id="dob" />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex  justify-between gap-x-3">
-                                        
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="address">Address</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="address" id="address" />
-                                        </div>
-                                    </div>
-
-                                    <div className="flex justify-between gap-x-3">
-                                        <div className="flex flex-col w-4/12">
-                                            <label htmlFor="gender">Gender</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="gender" id="gender" />
-                                        </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="plan">Plan</label>
-                                            <input className="input-primary px-6 focus:outline-none" type="text" name="plan" id="plan" />
-                                        </div>
+                                    <div>
+                                        <svg class="w-6 h-6" fill="none" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="hospital-details">
-                                <h1 className="header mt-9 mb-10">Hospital Details</h1>
+                                <div className="flex gap-x-8 items-center border-b border-gray-200 pb-14 mb-8">
+                                    <div className="checkbox">
+                                        <input type="checkbox" name="" id="" />
+                                    </div>
+                                    <div>
+                                        <img src={user} alt="" />
+                                    </div>
+                                    <div className="enrollee-border">
 
-                                <div className="flex justify-between gap-x-3">
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="hospital-state">State</label>
-                                        <input className="input-primary px-6 focus:outline-none" type="text" name="hospital-state" id="hospital-state" />
                                     </div>
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="hospital-name">Hospital</label>
-                                        <input className="input-primary px-6 focus:outline-none" type="text" name="hospital-name" id="hospital-name" />
+                                    <div className="flex flex-col gap-y-3">
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">First Name:</p>
+                                                <p className="text-black text-sm font-medium">Peter </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Last Name:</p>
+                                                <p className="text-black text-sm font-medium">Parker</p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Address:</p>
+                                                <p className="text-black text-sm font-medium">6, Ajala street, ikeja, Lagos state</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Gender:</p>
+                                                <p className="text-black text-sm font-medium">Female </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Email:</p>
+                                                <p className="text-black text-sm font-medium">name@example.com</p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Phone:</p>
+                                                <p className="text-black text-sm font-medium">081xxxxxxx</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-x-9">
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Hospital:</p>
+                                                <p className="text-black text-sm font-medium">name@example.com </p>
+                                            </div>
+                                            <div className="flex gap-x-1">
+                                                <p className="color-faded text-sm font-medium">Plan:</p>
+                                                <p className="text-black text-sm font-medium">Starter Plan</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    
+                                    <div>
+                                        <svg class="w-6 h-6" fill="none" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    </div>
                                 </div>
                             </div>
 
@@ -136,62 +230,19 @@ function SME() {
                                 <p className="color-primary text-base font-bold flex gap-x-2"><span><svg className="w-6 h-6" fill="none" stroke="#663391" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg></span>   <span>Add Enrollee</span> </p>
                             </div>
 
-                            <div className="flex gap-x-16">
-                                <div className="w-72 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:flex md:flex-col">
-                                    <div className="w-full flex-grow">
-                                        <h2 className="text-center font-bold uppercase mb-4">Plan Name</h2>
-                                        <h3 className="text-center font-bold text-4xl md:text-5xl mb-4">N19,900<span className="text-lg">/yr</span></h3>
-                                        
-                                        <ul className="text-sm mb-8 plan-detail">
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#00B252" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span>General Consultation</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#00B252" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span>Glasses Specialist</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#00B252" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span>Consultation</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#00B252" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span>Paediatrics</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#00B252" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span>Mental Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#00B252" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> <span>Admission</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#f00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>Fertility Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#f00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>Antenatal Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#f00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>Optical Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke="#f00" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> <span>Dental Care</span> </li>
-                                        </ul>
-                                    </div>
+                            <div className="flex gap-x-4">
+                                <div className="plan-price-box flex flex-col justify-center">
+                                    <p className="text-sm text-white font-medium">Price</p>
+                                    <p className="text-lg font-medium text-white">N19,900</p>
                                 </div>
-
-                                <div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">First Name</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Last Name</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Address</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Gender</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Email</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Phone</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Hospital</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
-                                    <div className="flex gap-x-1 mb-4">
-                                        <p className="text-sm font-medium color-faded">Plan</p> {":"} 
-                                        <p>{""}</p>
-                                    </div>
+                                <div className="plan-price-box flex flex-col justify-center">
+                                    <p className="text-sm text-white font-medium">Loan Tenor</p>
+                                    <p className="text-lg font-medium text-white">3 Months</p>
                                 </div>
-
+                                <div className="plan-duration-box flex flex-col justify-center">
+                                    <p className="text-sm text-white font-medium">Plan Duration</p>
+                                    <p className="text-lg font-medium text-white">12 Months</p>
+                                </div>
                             </div>
 
 
