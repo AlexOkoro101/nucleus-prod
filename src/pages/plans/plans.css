@@ -108,3 +108,12 @@
     border-radius: 30px;
     text-align: center;
 }
+.loader {
+    height: 50px !important;
+    width: 50px !important;
+    display: inline-block;
+}
+.toastify {
+    background-color: #5cb85c;
+    color: #FFFFFF;
+}

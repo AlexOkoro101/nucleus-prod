@@ -7,8 +7,11 @@ import buycover4 from '../../assets/img/buycover4.png';
 import lshs from '../../assets/img/lshs.png';
 import oyo from '../../assets/img/oyo.png';
 import ReadyTalk from '../../components/sections/ready-talk';
+import { useHistory, Link } from 'react-router-dom';
 
 function BuyCover() {
+    const history = useHistory()
+
     return (
         <div className="buy-cover mt-24 font-primary">
             <div className="text-center">
@@ -21,13 +24,13 @@ function BuyCover() {
                         <img src={buycover1} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Young Professional</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <button className="buycover-getstarted">Get Started</button>
+                        <Link to='/buy-cover/individual' className="buycover-getstarted">Get Started</Link>
                     </div>
                     <div>
                         <img src={buycover2} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Family</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <button className="buycover-getstarted">Get Started</button>
+                        <Link to='/buy-cover/family' className="buycover-getstarted">Get Started</Link>
                     </div>
                 </div>
                 <div className="flex justify-around gap-x-20 px-80 mb-14">
@@ -35,13 +38,13 @@ function BuyCover() {
                         <img src={buycover3} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">SMEs</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <button className="buycover-getstarted">Get Started</button>
+                        <Link to='/buy-cover/sme' className="buycover-getstarted">Get Started</Link>
                     </div>
                     <div>
                         <img src={buycover4} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Elderly</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <button className="buycover-getstarted">Get Started</button>
+                        <Link to='/buy-cover/elderly' className="buycover-getstarted">Get Started</Link>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory, Link } from 'react-router-dom'
 import CustomerExpectation from '../../components/sections/customer-expectation'
 import InsurancePackage from '../../components/sections/insurance-package'
 import OyoAgency from '../../components/sections/oyo-agency'
@@ -7,6 +8,9 @@ import Testimonials from '../../components/sections/testimonials'
 import './home.css'
 
 function Home() {
+    const history = useHistory()
+
+
     return (
         <div className="home font-primary">
             <div className="home-banner">
@@ -15,10 +19,10 @@ function Home() {
                     <p className="text-white text-sm mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quasi atque harum. Modi sed sit minus obcaecati, debitis tenetur deserunt perspiciatis, provident, dignissimos nostrum vero!</p>
 
                     <div className="home-buttons flex mb-5 gap-x-5">
-                        <button className="buy-cover-button">Buy Cover</button>
-                        <button className="transparent-button">Renew Cover</button>
+                        <Link to='/buy-cover' className="buy-cover-button">Buy Cover</Link>
+                        <Link to='/buy-cover/renew' className="transparent-button">Renew Cover</Link>
                     </div>
-                    <button className="main-button">Buy cover with loan</button>
+                    <Link className="main-button">Buy cover with loan</Link>
                 </div>
             </div>
 
