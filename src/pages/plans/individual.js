@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Banner from './shared/banner'
@@ -12,6 +13,17 @@ var Spinner = require('react-spinkit');
 function Individual() {
     //Routing
     const history = useHistory();
+    
+    // const [indexes, setIndexes] = React.useState([]);
+    // const [counter, setCounter] = React.useState(0);
+    const { control, register, handleSubmit } = useForm();
+    const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
+        control, // control props comes from useForm (optional: if you are using FormContext)
+        name: "dependants", // unique name for your Field Array
+        // keyName: "id", default to "id", you can change the key name
+      });
+    
+    
 
 
     //Notif
@@ -27,60 +39,13 @@ function Individual() {
         });
 
     //Hooks
-    const [initialPageName, setinitialPageName] = useState("Individual Plan")
-    const [dependatObj, setdependatObj] = useState(
-        {
-            firstName: {
-                name: "dependantFirstName",
-                value: ""
-            },
-            lastName: {
-                name: "dependantLastName",
-                value: ""
-            },
-            middleName: {
-                name: "dependantMiddleName",
-                value: ""
-            },
-            email: {
-                name: "dependantEmail",
-                value: ""
-            },
-            phone: {
-                name: "dependantPhoneNumber",
-                value: ""
-            },
-            gender: {
-                name: "dependantGender",
-                value: "Female"
-            },
-            dob: {
-                name: "dependantDob",
-                value: ""
-            },
-            address: {
-                name: "dependantAddress",
-                value: ""
-            },
-            hospital: {
-                name: "dependantHospital",
-                value: ""
-            },
-            hospitalAddress: {
-                name: "dependantHospitalAddress",
-                value: ""
-            },
-            
-        }
-    )
-    const [dependants, setdependants] = useState([
-        dependatObj
-    ])
     const [submit, setsubmit] = useState(false)
     const [planDetails, setplanDetails] = useState(null)
+    const [initialPageName, setinitialPageName] = useState("Individual Plan")
 
 
     const [isloading, setisloading] = useState(false)
+    const [isloadingPayment, setisloadingPayment] = useState(false)
     const [error, seterror] = useState(null)
 
     //Form values
@@ -95,6 +60,12 @@ function Individual() {
     const [address, setaddress] = useState("")
     const [hospital, sethospital] = useState("")
     const [hospitalAddress, sethospitalAddress] = useState("")
+    const [exisitingCondition, setexisitingCondition] = useState(false)
+    const [healthCondition, sethealthCondition] = useState("")
+    const [conditionDuration, setconditionDuration] = useState("")
+    const [conditionMedication, setconditionMedication] = useState("")
+
+    const [dependentArray, setdependentArray] = useState([])
 
 
 
@@ -147,57 +118,31 @@ function Individual() {
         })
     }
 
-    const submitForm = (e) => {
-        e.preventDefault()
-        // setisloading(true)
-        // seterror(null)
-        console.log(imgData)
+    const submitForm = (data) => {
+        // e.preventDefault()
+        console.log(data?.dependants)
+        setdependentArray(data?.dependants.map(person => ({ 
+            dependantFirstName: person.dependantFirstName,
+            dependantLastName: person.dependantLastName,
+            dependantEmail: person.dependantEmail,
+            dependantPhoneNumber: person.dependantPhoneNumber,
+            dependantGender: person.dependantGender,
+            dependantDob: person.dependantDob,
+            dependantAddress: person.dependantAddress,
+            dependantHospital: person.dependantHospital,
+            dependantExistingConditions: person.existingCondition,
+            dependantCondition: {
+                healthCondition: person.healthCondition,
+                healthConditionDuration: person.conditionDuration,
+                healthConditionMedication: person.conditionMedication
+            }
 
+        })))
+        // setdependentArray(data.dependants.map())
 
         setinitialPageName("Confirm Details")
         setsubmit(true)
-        
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-        myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
-
-        var raw = JSON.stringify({
-        "plan": 7,
-        "entity": {
-            "firstname": fname,
-            "lastname": lname,
-            "email": email,
-            "phone": phone,
-            "gender": gender,
-            "dob": dob,
-            "address": address,
-            "hospital": hospital,
-            "photo": `${imgData}`,
-            "agreement": true,
-            "existingConditions": true,
-            "condition": {
-            "healthCondition": "Lorem Ipsum",
-            "healthConditionDuration": "06/20",
-            "healthConditionMedication": "Lorem Ipsum"
-            }
-        },
-        "dependants": transformData(dependants)
-        });
-
-        console.log(JSON.parse(raw))
-
-        // var requestOptions = {
-        // method: 'POST',
-        // headers: myHeaders,
-        // body: raw,
-        // redirect: 'follow'
-        // };
-
-        // fetch("https://nucleusis-retail-api.herokuapp.com/api/buy-plan", requestOptions)
-        // .then(response => response.text())
-        // .then(result => console.log(result))
-        // .catch(error => console.log('error', error));
-
+    
 
     }
 
@@ -227,46 +172,125 @@ function Individual() {
         });
     }
 
-    const addDependants = () => {
-        setdependants([...dependants, dependatObj]);
-        console.log(dependants)
-    }
+    // const addDependants = () => {
+    //     setdependants([...dependants, dependatObj]);
+    //     console.log(dependants)
+    // }
 
-    const removeDependant = (index) => {
-        console.log(index)
-        const newArray = dependants.filter((dependant, id) => {
-            return id !== index
+    // const removeDependant = (index) => {
+    //     console.log(index)
+    //     const newArray = dependants.filter((dependant, id) => {
+    //         return id !== index
+    //     })
+    //     setdependants(newArray)
+    // }
+
+    // const setFirstName = (e, id) => {
+    //     // console.log(e.target?.getAttribute("name"))
+    //     // // console.log(index)
+
+    //     // dependants[index].firstName.value = e.target.value
+    //     var obj = dependants.map((dependant, index) => {
+    //         if(index == id) {
+    //             dependant.firstName.value = e.target.value
+    //         }
+    //         return dependant;
+            
+    //     })
+    //     setdependants(obj)
+        
+    // }
+
+    const buyPlan = () => {
+        setisloadingPayment(true)
+        seterror(null)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
+
+        const obj = {
+            plan: 7,
+            entity: {
+                "firstname": fname,
+                "lastname": lname,
+                "email": email,
+                "phone": phone,
+                "gender": gender,
+                "dob": dob,
+                "address": address,
+                "hospital": hospital,
+                "photo": `${imgData}`,
+                "agreement": true,
+                "existingConditions": exisitingCondition,
+                "condition": {
+                "healthCondition": healthCondition,
+                "healthConditionDuration": conditionDuration,
+                "healthConditionMedication": conditionMedication
+                }
+            },
+            dependants: dependentArray
+
+        }
+
+        if(!dependentArray.length) {
+            delete obj.dependants
+        }
+
+        console.log(obj)
+
+    
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify(obj),
+        redirect: 'follow'
+        };
+
+        fetch(enviroment.BASE_URL + "buy-plan", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            setisloadingPayment(false)
+            console.log(result)
+            if(result.status) {
+                generateLink(result.data)
+            }
+
         })
-        setdependants(newArray)
+        .catch(error => console.log('error', error));
     }
 
-    const setFirstName = (e, index) => {
-        // console.log(e.target?.getAttribute("name"))
-        // // console.log(index)
 
-        dependants[index].firstName.value = e.target.value
-        // console.log(dependants[index], dependants[index].firstName.value)
-        // console.log(dependants)
+    const generateLink = (data) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "orderReference": data.orderRef
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(enviroment.BASE_URL + "buy-plan/payment", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            if(result.status) {
+                window.open(result.data.link)
+            }
+        })
+        .catch(error => console.log('error', error));
     }
 
-    const config = {
-        public_key: 'FLWPUBK_TEST-89028cc12049cee2cb9302ca366395d5-X',
-        tx_ref: Date.now(),
-        amount: 100,
-        currency: 'NGN',
-        payment_options: 'card,mobilemoney,ussd',
-        customer: {
-          email: email,
-          phonenumber: phone,
-          name: `${fname} ${lname} ${mname}`,
-        },
-        customizations: {
-          title: 'Individual Plan',
-          description: 'Payment for plan subscription',
-          logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-        },
-    }   
-    const handleFlutterPayment = useFlutterwave(config); 
+    
+
 
     //End of Functions
 
@@ -284,7 +308,7 @@ function Individual() {
                 <div className="px-40 font-primary">
                     <div className="form">
                         {!submit ? (
-                            <form onSubmit={submitForm}>
+                            <form onSubmit={handleSubmit(submitForm)}>
                                 <h1 className="header mb-3">Plan Details</h1>
                                 <div>
                                     <div className="flex input-primary w-2/3 px-6 outline-none focus:outline-none items-center">
@@ -333,7 +357,7 @@ function Individual() {
                                     <label htmlFor="photo"></label>
                                     <input className="input-primary px-6" type="file" onChange={() => encodeImageFileAsURL()} name="photo" id="photo" className="hidden" />
                                     <div className="flex gap-x-2 w-2/6 cursor-pointer items-center" onClick={() => {chooseImage()}}>
-                                        <img src={imgData ? imgData : user} alt="db" width="68px" />
+                                        <img src={imgData ? imgData : user} alt="db" width="68px" height="68px"/>
                                         <p className="text-sm font-medium">Tap to upload image</p>
                                     </div>
                                 </div>
@@ -395,91 +419,150 @@ function Individual() {
                                             <input value={hospitalAddress} onChange={(e) => sethospitalAddress(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="hospital" id="hospital" />
                                         </div>
                                     </div>
+
+                                    <h1 className="header">Condition </h1>
+
+                                    <div className="flex justify-between gap-x-3">
+                                        <div className="flex flex-col  w-4/12">
+                                            <label htmlFor="exisiting-condition">Existing Condition</label>
+                                            <select name="exisiting-condition" id="exisiting-condition" className="input-primary px-6 focus:outline-none" value={exisitingCondition} onChange={(e) => setexisitingCondition(e.target.value)}>
+                                                <option value={true}>True</option>
+                                                <option value={false}>False</option>
+                                            </select>
+                                        </div>
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="health-condition">Health Condition</label>
+                                            <input value={healthCondition} onChange={(e) => sethealthCondition(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="health-condition" id="health-condition" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex justify-between gap-x-3">
+                                        <div className="flex flex-col  w-4/12">
+                                            <label htmlFor="condition-duration">Condition Duration</label>
+                                            <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} />
+                                                
+                                        </div>
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="condition-medication">Condition Medication</label>
+                                            <input value={conditionMedication} onChange={(e) => setconditionMedication(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="condition-medication" id="condition-medication" />
+                                        </div>
+                                    </div>
+
+
                                 </div>
                                 
 
                                 <hr />
 
 
-                                {dependants.map((dependant, index) => (
+                                {fields.map(({id}, index) => {
+                                    return (
                                     <div key={index} className="mb-20">
-                                        <h1 className="header mt-9 mb-10">Dependant Details {dependants.length > 1 && `- ${index + 1}`}</h1>
+                                        <h1 className="header mt-9 mb-10">Dependant Details {`- ${index + 1}`}</h1>
                                         <div className="flex flex-col gap-y-6">
                                             <div className="flex justify-between gap-x-3">
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.firstName.name}>First Name</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.firstName.name} id={dependant.firstName.name} onChange={(e) => setFirstName(e, index)} />
+                                                    <label>First Name</label>
+                                                    <input {...register(`dependants.${index}.dependantFirstName`)} className="input-primary px-6 focus:outline-none" type="text"  />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.lastName.name}>Last Name</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.lastName.name} id={dependant.lastName.name} value={dependant.lastName.value} onChange={(e) => {dependant.lastName.value = e.target.value}}/>
+                                                    <label>Last Name</label>
+                                                    <input {...register(`dependants.${index}.dependantLastName`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.middleName.name}>Middle Name</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.middleName.name} id={dependant.middleName.name} value={dependant.middleName.value} onChange={(e) => {dependant.middleName.value = e.target.value}}/>
+                                                    <label>Middle Name</label>
+                                                    <input  {...register(`dependants.${index}.dependantMiddleName`)} className="input-primary px-6 focus:outline-none" type="text"  />
                                                 </div>
                                             </div>
 
                                             <div className="flex justify-between gap-x-3">
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.gender.name}>Gender</label>
-                                                    <select name={dependant.gender.name} id={dependant.gender.name} value={dependant.gender.value} className="input-primary px-6 focus:outline-none" onChange={(e) => {dependant.gender.value = e.target.value}}>
+                                                    <label>Gender</label>
+                                                    <select {...register(`dependants.${index}.dependantGender`)} className="input-primary px-6 focus:outline-none" >
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.dob.name}>D.O.B</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.dob.name} id={dependant.dob.name} value={dependant.dob.value} onChange={(e) => {dependant.dob.value = e.target.value}} />
+                                                    <label>D.O.B</label>
+                                                    <input {...register(`dependants.${index}.dependantDob`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.email.name}>Email</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="email" name={dependant.email.name} id={dependant.email.name} value={dependant.email.value} onChange={(e) => {dependant.email.value = e.target.value}} />
+                                                    <label>Email</label>
+                                                    <input {...register(`dependants.${index}.dependantEmail`)} className="input-primary px-6 focus:outline-none" type="email" />
                                                 </div>
                                             </div>
 
                                             <div className="flex  justify-between gap-x-3">
                                                 <div className="flex flex-col w-4/12">
-                                                    <label htmlFor={dependant.phone.name}>Phone Number</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="tel" name={dependant.phone.name} id={dependant.phone.name} value={dependant.phone.value} onChange={(e) => {dependant.phone.value = e.target.value}} />
+                                                    <label>Phone Number</label>
+                                                    <input {...register(`dependants.${index}.dependantPhoneNumber`)} className="input-primary px-6 focus:outline-none" type="tel" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.address.name}>Address</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.address.name} id={dependant.address.name} value={dependant.address.value} onChange={(e) => {dependant.address.value = e.target.value}} />
+                                                    <label>Address</label>
+                                                    <input {...register(`dependants.${index}.dependantAddress`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                             </div>
 
-                                            <h1 className="header">Dependant {dependants.length > 1 && `${index + 1}`} Hospital Details</h1>
+                                            <h1 className="header">Dependant {`${index + 1}`} Hospital Details</h1>
 
                                             <div className="flex justify-between gap-x-3">
                                                 <div className="flex flex-col w-4/12">
-                                                    <label htmlFor={dependant.hospital.name}>Name</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.hospital.name} id={dependant.hospital.name} value={dependant.hospital.value} onChange={(e) => {dependant.hospital.value = e.target.value}} />
+                                                    <label>Name</label>
+                                                    <input {...register(`dependants.${index}.dependantHospital`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor={dependant.hospitalAddress.name}>Address</label>
-                                                    <input className="input-primary px-6 focus:outline-none" type="text" name={dependant.hospitalAddress.name} id={dependant.hospitalAddress.name} value={dependant.hospitalAddress.value} onChange={(e) => {dependant.hospitalAddress.value = e.target.value}} />
+                                                    <label>Address</label>
+                                                    <input {...register(`dependants.${index}.dependantHospitalAddress`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                             </div>
 
-                                            {dependants.length > 1 && (
-                                                <div>
-                                                    <p onClick={() => removeDependant(index)} className="cursor-pointer text-red-600 text-xs font-bold flex gap-x-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> <span>Remove Dependant</span> </p>
-                                                </div>
+                                            <h1 className="header">Dependant {`${index + 1}`} Condition </h1>
 
-                                            )}
+                                            <div className="flex justify-between gap-x-3">
+                                                <div className="flex flex-col  w-4/12">
+                                                    <label htmlFor="exisiting-condition">Existing Condition</label>
+                                                    <select name="existing-condition" id="existing-condition" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.existingCondition`)}>
+                                                        <option value={true}>True</option>
+                                                        <option value={false}>False</option>
+                                                    </select>
+                                                </div>
+                                                <div className="flex flex-col flex-1">
+                                                    <label htmlFor="health-condition">Health Condition</label>
+                                                    <input  className="input-primary px-6 focus:outline-none" name="health-condition" id="health-condition" {...register(`dependants.${index}.healthCondition`)} />
+                                                </div>
+                                            </div>
+
+                                            <div className="flex justify-between gap-x-3">
+                                                <div className="flex flex-col  w-4/12">
+                                                    <label htmlFor="condition-duration">Condition Duration</label>
+                                                    <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.conditionDuration`)} />
+                                                        
+                                                </div>
+                                                <div className="flex flex-col flex-1">
+                                                    <label htmlFor="condition-medication">Condition Medication</label>
+                                                    <input  className="input-primary px-6 focus:outline-none" name="condition-medication" id="condition-medication" {...register(`dependants.${index}.conditionMedication`)}  />
+                                                </div>
+                                            </div>
+
+                                            
+                                            <div>
+                                                <p onClick={() => remove(index)} className="cursor-pointer text-red-600 text-xs font-bold flex gap-x-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg> <span>Remove Dependant</span> </p>
+                                            </div>
+
+                                        
 
                                         </div>
                                     </div>
-                                ))}
+                                )})}
 
 
                                 <div className="add-enrollees flex mt-10">
-                                    <p onClick={addDependants} className="cursor-pointer color-primary text-base font-bold flex gap-x-2"><span><svg className="w-6 h-6" fill="none" stroke="#663391" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg></span>   <span>Add Dependants</span> </p>
+                                    <p onClick={() => append({})} className="cursor-pointer color-primary text-base font-bold flex gap-x-2"><span><svg className="w-6 h-6" fill="none" stroke="#663391" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path></svg></span>   <span>Add Dependants</span> </p>
                                 </div>
 
                                 <div>
-                                    <button onClick={submitForm} type="submit" className="individual-btn mt-14 mb-14 uppercase">Proceed</button>
+                                    <input type="submit" className="cursor-pointer individual-btn mt-14 mb-14 uppercase" />
                                 </div>
                                 
                             </form>
@@ -497,7 +580,7 @@ function Individual() {
                                     <div className="mb-10">
                                         <label htmlFor="photo"></label>
                                         <div className="flex gap-x-2 w-2/6 cursor-pointer items-center">
-                                            <img src={imgData} alt="db" width="68px" />
+                                            <img src={imgData} alt="db" width="68px" height="68px"/>
                                         </div>
                                     </div>
 
@@ -533,22 +616,10 @@ function Individual() {
                                     <div>
                                         <button 
                                         onClick={() => {
-                                        handleFlutterPayment({
-                                            callback: (response) => {
-                                            console.log(response);
-                                            if(response.status == 'successful') {
-                                                paymentSuccess()
-                                                setTimeout(() => {
-                                                    // history.push('/buy-cover')
-                                                    window.location.assign('/buy-cover')
-                                                }, 2000)
-                                            }
-                                                closePaymentModal() // this will close the modal programmatically
-                                            },
-                                            onClose: () => {},
-                                        });
+                                        buyPlan()
+                                        
                                         }}
-                                         type="submit" className="individual-btn mt-14 mb-14 uppercase">Make Payment</button>
+                                         type="button" className="individual-btn mt-14 mb-14 uppercase">{isloadingPayment ? (<Spinner name="circle" color='#fff' fadeIn='none' />) : ("Make Payment")}</button>
                                     </div>
                                     
                                 </div>

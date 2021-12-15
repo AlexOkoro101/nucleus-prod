@@ -7,7 +7,6 @@ import './plans.css'
 import Individual from './individual'
 import { enviroment } from '../../components/shared/enviroment'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min'
-import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 var Spinner = require('react-spinkit');
 
 function RenewCover() {
@@ -15,9 +14,11 @@ function RenewCover() {
     const [phonePolicy, setphonePolicy] = useState("")
     const [companyRC, setcompanyRC] = useState("")
     const [customerDetail, setcustomerDetail] = useState(null)
+    const [showCustomer, setshowCustomer] = useState(false)
 
     const [isloading, setisloading] = useState(false)
     const [error, seterror] = useState(null)
+    const [transDetail, settransDetail] = useState(null)
 
     //Routing
     const history = useHistory();
@@ -63,8 +64,11 @@ function RenewCover() {
         .then(response => response.json())
         .then(result => {
             console.log(result)
+            setisloading(false)
             if(result.status == false) {
-                setdetail(result.data)
+                // generateLink(result.data)
+                setshowCustomer(true)
+                settransDetail(result.data)
             }
         })
         .catch(error => console.log('error', error));
@@ -87,77 +91,47 @@ function RenewCover() {
         .then(result => {
             console.log(result)
             if(result.status == false) {
-                setdetail(result.data)
+                // setdetail(result.data)
             }
         })
         .catch(error => console.log('error', error));
             
             
     }
-        
-    const setdetail = (data) => {
-            setcustomerDetail(data)
-            if(!customerDetail) {
-                setcustomerDetail(data)
-                console.log("Dont call")
-                return
-            } else {
-                setisloading(false)
-                handleFlutterPayment({
-                    callback: (response) => {
-                        console.log(response);
-                        paymentSuccess()
-                        setTimeout(() => {
-                            // history.push('/')
-                            window.location.assign('/')
-                        }, 2000)
-                        closePaymentModal() // this will close the modal programmatically
-                    },
-                    onClose: () => {},
-                });
+
+    const generateLink = (data) => {
+        setisloading(true)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+        "orderReference": data.order_ref
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch(enviroment.BASE_URL + "buy-plan/payment", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            setisloading(false)
+            console.log(result)
+            if(result.status == true) {
+                window.open(result.data.link)
             }
-            
+        })
+        .catch(error => console.log('error', error));
     }
+   
 
     
 
-    const individualConfig = {
-        public_key: 'FLWPUBK_TEST-89028cc12049cee2cb9302ca366395d5-X',
-        tx_ref: Date.now(),
-        amount: 100,
-        currency: 'NGN',
-        payment_options: 'card,mobilemoney,ussd',
-        customer: {
-          email: customerDetail?.entity[0].entity_email,
-          phonenumber: customerDetail?.entity[0].entity_phone,
-          name: `${customerDetail?.entity[0].entity_firstname} ${customerDetail?.entity[0].entity_lastname} `,
-        },
-        customizations: {
-          title: 'Renew Plan',
-          description: 'Payment for subscription renewal',
-          logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-        },
-    }   
-    const handleFlutterPayment = useFlutterwave(individualConfig); 
-
-    const smeConfig = {
-        public_key: 'FLWPUBK_TEST-89028cc12049cee2cb9302ca366395d5-X',
-        tx_ref: Date.now(),
-        amount: 100,
-        currency: 'NGN',
-        payment_options: 'card,mobilemoney,ussd',
-        customer: {
-          email: customerDetail?.entity[0].entity_email,
-          phonenumber: customerDetail?.entity[0].entity_phone,
-          name: `${customerDetail?.entity[0].entity_firstname} ${customerDetail?.entity[0].entity_lastname} `,
-        },
-        customizations: {
-          title: 'Renew Plan',
-          description: 'Payment for subscription renewal',
-          logo: 'https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg',
-        },
-    }   
-    const handleSMEFlutterPayment = useFlutterwave(smeConfig); 
 
     
     return (
@@ -166,35 +140,79 @@ function RenewCover() {
             <Banner bannerHeader="Renew Cover"></Banner>
 
             <div className="px-52 font-primary mb-40">
-                <div className="form text-center px-5">
-                    <div className="tabs">
-                        <ul>
-                            <li className={individualTab ? "active cursor-pointer" : " cursor-pointer"} onClick={() => changeTab('individual')}>Individual</li>
-                            <li className={!individualTab ? "active cursor-pointer" : " cursor-pointer"} onClick={() => changeTab('SME')}>SME</li>
-                        </ul>
-                    </div>
-                    <div className="tab-content">
-                        {individualTab ? (
-                            <>
-                                <div className="w-full text-left">
-                                    <input className="renew-cover-input" type="text" placeholder="Enter Phone number or Policy Number" value={phonePolicy} onChange={(e) => setphonePolicy(e.target.value)} />
-                                    <button onClick={RenewIndividual} type='button' className="renew-cover-button">{isloading ? (
-                                        <Spinner name="circle" fadeIn='none' color='#fff'/>
-                                    ) : (
-                                        "Proceed"
-                                    )} </button>
+                {!showCustomer ? (
+                    <div className="form text-center px-5">
+                        <div className="tabs">
+                            <ul>
+                                <li className={individualTab ? "active cursor-pointer" : " cursor-pointer"} onClick={() => changeTab('individual')}>Individual</li>
+                                <li className={!individualTab ? "active cursor-pointer" : " cursor-pointer"} onClick={() => changeTab('SME')}>SME</li>
+                            </ul>
+                        </div>
+                        <div className="tab-content">
+                            {individualTab ? (
+                                <>
+                                    <div className="w-full text-left">
+                                        <input className="renew-cover-input" type="text" placeholder="Enter Phone number or Policy Number" value={phonePolicy} onChange={(e) => setphonePolicy(e.target.value)} />
+                                        <button onClick={RenewIndividual} type='button' className="renew-cover-button">{isloading ? (
+                                            <Spinner name="circle" fadeIn='none' color='#fff'/>
+                                        ) : (
+                                            "Proceed"
+                                        )} </button>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="w-full text-left">
+                                        <input className="renew-cover-input" type="text" placeholder="Enter company name or Rc number" value={companyRC} onChange={(e) => setcompanyRC(e.target.value)} />
+                                        <button onClick={RenewSME} type="button" className="renew-cover-button">Proceed</button>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+                    </div>    
+
+                ) : (
+                    <div className="confirm-cover-details">
+                        <div>
+                            <h1 className="header mb-3">Confirm Details</h1>
+                            <div>
+                                <p>{transDetail?.entity[0].entity_firstname} {transDetail?.entity[0].entity_lastname}</p>
+                            </div>
+
+                            <h1 className="header mt-9 mb-10">Renew Details</h1>
+
+                            <div className="mb-10">
+                                <label htmlFor="photo"></label>
+                                <div className="flex gap-x-2 w-2/6 cursor-pointer items-center">
+                                    {/* <img src={imgData} alt="db" width="68px" height="68px"/> */}
                                 </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className="w-full text-left">
-                                    <input className="renew-cover-input" type="text" placeholder="Enter company name or Rc number" value={companyRC} onChange={(e) => setcompanyRC(e.target.value)} />
-                                    <button onClick={RenewSME} type="button" className="renew-cover-button">Proceed</button>
-                                </div>
-                            </>
-                        )}
+                            </div>
+
+                            <table className="table-fixed w-full">
+                                <tbody>
+                                    <tr className="">
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Amount</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_amount}</span>  </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Type</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_type}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Plan Name</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.plan.plan_name}</span> </td>
+                                    </tr>
+                                    <tr className="">
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Plan Tenure</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.plan.plan_tenure}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Status</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_status}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.entity.entity_hospital}</span> </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+
+                            <div>
+                                <button 
+                                    onClick={() => generateLink(transDetail)}
+                                    type="button" className="individual-btn mt-14 mb-14 uppercase">{isloading ? (<Spinner name="circle" color='#fff' fadeIn='none' />) : ("Make Payment")}</button>
+                            </div>
+                            
+                        </div>
                     </div>
-                </div>    
+                )}
             </div>
         </div>
     )
