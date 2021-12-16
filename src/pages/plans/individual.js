@@ -435,23 +435,34 @@ function Individual() {
                                                 <option value={false}>False</option>
                                             </select>
                                         </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="health-condition">Health Condition</label>
-                                            <input value={healthCondition} onChange={(e) => sethealthCondition(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="health-condition" id="health-condition" />
-                                        </div>
+                                        {
+                                            exisitingCondition && (
+                                            <div className="flex flex-col flex-1">
+                                                <label htmlFor="health-condition">Health Condition</label>
+                                                <input value={healthCondition} onChange={(e) => sethealthCondition(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="health-condition" id="health-condition" />
+                                            </div>
+
+                                            )
+                                        }
                                     </div>
 
-                                    <div className="flex justify-between gap-x-3">
-                                        <div className="flex flex-col  w-4/12">
-                                            <label htmlFor="condition-duration">Condition Duration</label>
-                                            <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} />
-                                                
-                                        </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="condition-medication">Condition Medication</label>
-                                            <input value={conditionMedication} onChange={(e) => setconditionMedication(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="condition-medication" id="condition-medication" />
-                                        </div>
-                                    </div>
+                                    {
+                                        exisitingCondition && (
+
+                                            <div className="flex justify-between gap-x-3">
+                                                <div className="flex flex-col  w-4/12">
+                                                    <label htmlFor="condition-duration">Condition Duration</label>
+                                                    <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} />
+                                                        
+                                                </div>
+                                                <div className="flex flex-col flex-1">
+                                                    <label htmlFor="condition-medication">Condition Medication</label>
+                                                    <input value={conditionMedication} onChange={(e) => setconditionMedication(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="condition-medication" id="condition-medication" />
+                                                </div>
+                                            </div>
+                                        )
+                                    }
+
 
 
                                 </div>
