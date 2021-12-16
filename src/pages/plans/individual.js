@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 import Banner from './shared/banner'
 import user from '../../assets/img/vector.svg'
 import './plans.css'
@@ -10,10 +13,11 @@ import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { useHistory } from 'react-router-dom';
 var Spinner = require('react-spinkit');
 
+
 function Individual() {
     //Routing
     const history = useHistory();
-    
+    const [startDate, setStartDate] = useState(new Date());
     // const [indexes, setIndexes] = React.useState([]);
     // const [counter, setCounter] = React.useState(0);
     const { control, register, handleSubmit } = useForm();
@@ -388,7 +392,8 @@ function Individual() {
                                         </div>
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="dob">D.O.B</label>
-                                            <input value={dob} onChange={(e) => setdob(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="dob" id="dob" />
+                                            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="entity-dob" />
+                                            {/* <input value={dob} onChange={(e) => setdob(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="dob" id="dob" /> */}
                                         </div>
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="email">Email</label>

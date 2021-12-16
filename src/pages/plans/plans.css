@@ -117,3 +117,14 @@
     background-color: #5cb85c;
     color: #FFFFFF;
 }
+.entity-dob {
+    background: #E5E5E5;
+    border-radius: 30px;
+    height: 64px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #000000;
+    padding: 0 1.5rem;
+    width: 100%;
+    outline: none;
+}
