@@ -3,7 +3,7 @@ import oyo from '../../assets/img/oyo-agency.png'
 
 function OyoAgency() {
     return (
-        <div className="oyo-agency pt-16 px-40 pb-24 flex justify-between  gap-x-32">
+        <div className="oyo-agency lg:pt-16 pt-8 lg:px-40 px-8 lg:pb-24 pb-8 flex lg:flex-row flex-col justify-between  gap-x-32">
             <div className="flex-2">
                 <img src={oyo} alt="Oyo Insurance Agency" />
             </div>

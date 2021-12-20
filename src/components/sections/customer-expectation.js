@@ -2,11 +2,11 @@ import React from 'react'
 
 function CustomerExpectation() {
     return (
-        <div className="px-40 pt-28 pb-52 text-center">
+        <div className="lg:px-40 px-8 lg:pt-28 lg:pb-52 pt-8 pb-8 text-center">
             <div className="header text-center mb-8">
                 <p className="font-extrabold text-black text-3xl mb-6">We always try to understand <br /> customers expectation</p>
             </div>
-            <div className="map-bg px-52">
+            <div className="map-bg lg:px-52 px-0">
                 <p className="font-medium expectation-caption">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris <br /> elementum sit aliquet gravida rhoncus gravida. Volutpat consectetur</p>
                 <div className="flex justify-between mt-16 mb-5">
                     <div>

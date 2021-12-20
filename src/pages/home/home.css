@@ -19,7 +19,7 @@
     background: #8E2B8D;
     border-radius: 30px;
     color: #fff;
-    padding: 14px 57px;
+    padding: 14px 45px;
 }
 .insurance-caption {
     font-size: 11px;
@@ -148,4 +148,20 @@
     border-radius: 7px;
     width: 76.3%;
     top: -5rem;
+}
+
+@media (max-width: 550px) {
+    .counter {
+        font-size: 24px;
+    }
+    .dp {
+        width: 250px;
+    }
+    .clients {
+        width: 100%;
+        left: 0;
+    }
+    .clients img {
+        height: 1.7rem;
+    }
 }

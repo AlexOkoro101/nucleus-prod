@@ -17,9 +17,6 @@ var Spinner = require('react-spinkit');
 function Individual() {
     //Routing
     const history = useHistory();
-    const [startDate, setStartDate] = useState(new Date());
-    // const [indexes, setIndexes] = React.useState([]);
-    // const [counter, setCounter] = React.useState(0);
     const { control, register, handleSubmit } = useForm();
     const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
         control, // control props comes from useForm (optional: if you are using FormContext)
@@ -43,7 +40,7 @@ function Individual() {
         });
 
     //Hooks
-    const [submit, setsubmit] = useState(false)
+    const [confrimDetail, setconfrimDetail] = useState(false)
     const [planDetails, setplanDetails] = useState(null)
     const [initialPageName, setinitialPageName] = useState("Individual Plan")
 
@@ -60,16 +57,20 @@ function Individual() {
     const [email, setemail] = useState("")
     const [phone, setphone] = useState("")
     const [gender, setgender] = useState("")
-    const [dob, setdob] = useState("")
+    const [dob, setdob] = useState(new Date())
     const [address, setaddress] = useState("")
     const [hospital, sethospital] = useState("")
     const [hospitalAddress, sethospitalAddress] = useState("")
-    const [exisitingCondition, setexisitingCondition] = useState(false)
+    const [exisitingCondition, setexisitingCondition] = useState("false")
     const [healthCondition, sethealthCondition] = useState("")
     const [conditionDuration, setconditionDuration] = useState("")
     const [conditionMedication, setconditionMedication] = useState("")
 
     const [dependentArray, setdependentArray] = useState([])
+    const [dependantExistingCondition, setdependantExistingCondition] = useState("false")
+    const [dependantDob, setdependantDob] = useState(new Date())
+    // console.log(new Date().toLocaleDateString())
+    
 
 
 
@@ -111,27 +112,18 @@ function Individual() {
         }
     }
 
-    const transformData = (data) => {
-        const trfObj = {};
-        return data.map((obj) => {
-            Object.keys(obj).forEach((key) => {
-                const {name, value} = obj[key];
-                trfObj[name] = value;
-            })
-            return trfObj;
-        })
-    }
 
     const submitForm = (data) => {
         // e.preventDefault()
         console.log(data?.dependants)
+        console.log(control)
         setdependentArray(data?.dependants.map(person => ({ 
             dependantFirstName: person.dependantFirstName,
             dependantLastName: person.dependantLastName,
             dependantEmail: person.dependantEmail,
             dependantPhoneNumber: person.dependantPhoneNumber,
             dependantGender: person.dependantGender,
-            dependantDob: person.dependantDob,
+            dependantDob: person.dependantDob.toLocaleDateString(),
             dependantAddress: person.dependantAddress,
             dependantHospital: person.dependantHospital,
             dependantExistingConditions: person.existingCondition,
@@ -145,7 +137,7 @@ function Individual() {
         // setdependentArray(data.dependants.map())
 
         setinitialPageName("Confirm Details")
-        setsubmit(true)
+        setconfrimDetail(true)
     
 
     }
@@ -309,14 +301,35 @@ function Individual() {
 
                 </div>
             ) : (
-                <div className="px-40 font-primary">
+                <div className="lg:px-40 px-8 font-primary">
                     <div className="form">
-                        {!submit ? (
+                        {!confrimDetail ? (
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <h1 className="header mb-3">Plan Details</h1>
                                 <div>
-                                    <div className="flex input-primary w-2/3 px-6 outline-none focus:outline-none items-center">
+                                    <div className="flex input-primary lg:w-2/3 w-full px-6 outline-none focus:outline-none items-center">
                                         {planDetails?.plan.planName}
+                                    </div>
+                                </div>
+
+
+                                <div className="mt-10 w-2/3 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-0 md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:flex md:flex-col">
+                                    <div className="w-full flex-grow">
+                                        <h2 className="font-bold uppercase mb-4">Plan Benefits</h2>
+                                        {/* <h3 className="text-center font-bold text-4xl md:text-5xl mb-4">N19,900<span className="text-lg">/yr</span></h3> */}
+                                        
+                                        <ul className="text-sm mb-8 plan-detail flex flex-wrap gap-x-4">
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.general_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.general_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>General Consultation</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.glasses ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.glasses ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Glasses Specialist</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.specialist_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.specialist_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Consultation</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.paedetrics ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.paedetrics ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Paediatrics</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.mental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.mental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Mental Care</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.admission ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.admission ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Admission</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.fertility_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.fertility_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Fertility Care</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.antenatal_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.antenatal_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Antenatal Care</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.optical_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.optical_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Optical Care</span> </li>
+                                            <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.dental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.dental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Dental Care</span> </li>
+                                        </ul>
                                     </div>
                                 </div>
 
@@ -335,39 +348,19 @@ function Individual() {
                                     </div>
                                 </div>
 
-                                <div className="mt-10 w-72 md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-auto md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:flex md:flex-col">
-                                    <div className="w-full flex-grow">
-                                        <h2 className="text-center font-bold uppercase mb-4">Plan Benefits</h2>
-                                        {/* <h3 className="text-center font-bold text-4xl md:text-5xl mb-4">N19,900<span className="text-lg">/yr</span></h3> */}
-                                        
-                                        <ul className="text-sm mb-8 plan-detail">
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.general_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.general_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>General Consultation</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.glasses ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.glasses ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Glasses Specialist</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.specialist_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.specialist_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Consultation</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.paedetrics ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.paedetrics ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Paediatrics</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.mental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.mental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Mental Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.admission ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.admission ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Admission</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.fertility_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.fertility_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Fertility Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.antenatal_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.antenatal_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Antenatal Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.optical_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.optical_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Optical Care</span> </li>
-                                            <li className="leading-tight flex mb-2 gap-x-4"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.dental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.dental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Dental Care</span> </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
                                 <h1 className="header mt-9 mb-10">Personal Details</h1>
 
                                 <div className="mb-10">
                                     <label htmlFor="photo"></label>
                                     <input className="input-primary px-6" type="file" onChange={() => encodeImageFileAsURL()} name="photo" id="photo" className="hidden" />
-                                    <div className="flex gap-x-2 w-2/6 cursor-pointer items-center" onClick={() => {chooseImage()}}>
+                                    <div className="flex gap-x-2 lg:w-2/6 w-4/6 cursor-pointer items-center" onClick={() => {chooseImage()}}>
                                         <img src={imgData ? imgData : user} alt="db" width="68px" height="68px"/>
                                         <p className="text-sm font-medium">Tap to upload image</p>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-y-6 mb-10">
-                                    <div className="flex justify-between gap-x-3">
+                                    <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="first-name">First Name</label>
                                             <input value={fname} onChange={(e) => setfname(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="first-name" id="first-name" />
@@ -382,7 +375,7 @@ function Individual() {
                                         </div>
                                     </div>
 
-                                    <div className="flex justify-between gap-x-3">
+                                    <div className="flex flex-col lg:flex-row justify-between lg:gap-x-3 lg:gap-y-0 gap-y-3">
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="gender">Gender</label>
                                             <select name="gender" id="gender" className="input-primary px-6 focus:outline-none" value={gender} onChange={(e) => setgender(e.target.value)}>
@@ -392,7 +385,7 @@ function Individual() {
                                         </div>
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="dob">D.O.B</label>
-                                            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="entity-dob" />
+                                            <DatePicker selected={dob} onChange={(date) => setdob(date)} className="entity-dob" />
                                             {/* <input value={dob} onChange={(e) => setdob(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="dob" id="dob" /> */}
                                         </div>
                                         <div className="flex flex-col flex-1">
@@ -401,8 +394,8 @@ function Individual() {
                                         </div>
                                     </div>
 
-                                    <div className="flex  justify-between gap-x-3">
-                                        <div className="flex flex-col w-4/12">
+                                    <div className="flex flex-col lg:flex-row lg:gap-x-3 lg:gap-y-0 justify-between gap-y-3">
+                                        <div className="flex flex-col lg:w-4/12 ">
                                             <label htmlFor="phone">Phone Number</label>
                                             <input value={phone} onChange={(e) => setphone(e.target.value)}  className="input-primary px-6 focus:outline-none" type="tel" name="phone" id="phone" />
                                         </div>
@@ -427,16 +420,16 @@ function Individual() {
 
                                     <h1 className="header">Condition </h1>
 
-                                    <div className="flex justify-between gap-x-3">
-                                        <div className="flex flex-col  w-4/12">
+                                    <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
+                                        <div className="flex flex-col  lg:w-4/12">
                                             <label htmlFor="exisiting-condition">Existing Condition</label>
                                             <select name="exisiting-condition" id="exisiting-condition" className="input-primary px-6 focus:outline-none" value={exisitingCondition} onChange={(e) => setexisitingCondition(e.target.value)}>
-                                                <option value={true}>True</option>
-                                                <option value={false}>False</option>
+                                                <option value="true">True</option>
+                                                <option value="false">False</option>
                                             </select>
                                         </div>
                                         {
-                                            exisitingCondition && (
+                                            (exisitingCondition == "true") && (
                                             <div className="flex flex-col flex-1">
                                                 <label htmlFor="health-condition">Health Condition</label>
                                                 <input value={healthCondition} onChange={(e) => sethealthCondition(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="health-condition" id="health-condition" />
@@ -447,10 +440,10 @@ function Individual() {
                                     </div>
 
                                     {
-                                        exisitingCondition && (
+                                        (exisitingCondition == "true") && (
 
-                                            <div className="flex justify-between gap-x-3">
-                                                <div className="flex flex-col  w-4/12">
+                                            <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
+                                                <div className="flex flex-col  lg:w-4/12">
                                                     <label htmlFor="condition-duration">Condition Duration</label>
                                                     <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} />
                                                         
@@ -476,10 +469,10 @@ function Individual() {
                                     <div key={index} className="mb-20">
                                         <h1 className="header mt-9 mb-10">Dependant Details {`- ${index + 1}`}</h1>
                                         <div className="flex flex-col gap-y-6">
-                                            <div className="flex justify-between gap-x-3">
+                                            <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
                                                 <div className="flex flex-col flex-1">
                                                     <label>First Name</label>
-                                                    <input {...register(`dependants.${index}.dependantFirstName`)} className="input-primary px-6 focus:outline-none" type="text"  />
+                                                    <input {...register(`dependants.${index}.dependantFirstName`)} control={control} className="input-primary px-6 focus:outline-none" type="text"  />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Last Name</label>
@@ -491,7 +484,7 @@ function Individual() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex justify-between gap-x-3">
+                                            <div className="flex flex-col lg:flex-row justify-between lg:gap-x-3 lg:gap-y-0 gap-y-3">
                                                 <div className="flex flex-col flex-1">
                                                     <label>Gender</label>
                                                     <select {...register(`dependants.${index}.dependantGender`)} className="input-primary px-6 focus:outline-none" >
@@ -501,7 +494,8 @@ function Individual() {
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>D.O.B</label>
-                                                    <input {...register(`dependants.${index}.dependantDob`)} className="input-primary px-6 focus:outline-none" type="text" />
+                                                    {/* <input {...register(`dependants.${index}.dependantDob`)} className="input-primary px-6 focus:outline-none" type="text" /> */}
+                                                    <DatePicker {...register(`dependants.${index}.dependantDob`, {value: dependantDob, onChange: (date) => setdependantDob(date)})} selected={dependantDob} onChange={(date) => setdependantDob(date)} className="entity-dob" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Email</label>
@@ -509,8 +503,8 @@ function Individual() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex  justify-between gap-x-3">
-                                                <div className="flex flex-col w-4/12">
+                                            <div className="flex flex-col lg:flex-row lg:gap-x-3 lg:gap-y-0 justify-between gap-y-3">
+                                                <div className="flex flex-col lg:w-4/12">
                                                     <label>Phone Number</label>
                                                     <input {...register(`dependants.${index}.dependantPhoneNumber`)} className="input-primary px-6 focus:outline-none" type="tel" />
                                                 </div>
@@ -535,31 +529,44 @@ function Individual() {
 
                                             <h1 className="header">Dependant {`${index + 1}`} Condition </h1>
 
-                                            <div className="flex justify-between gap-x-3">
-                                                <div className="flex flex-col  w-4/12">
+                                            <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
+                                                <div className="flex flex-col  lg:w-4/12">
                                                     <label htmlFor="exisiting-condition">Existing Condition</label>
-                                                    <select name="existing-condition" id="existing-condition" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.existingCondition`)}>
-                                                        <option value={true}>True</option>
-                                                        <option value={false}>False</option>
+                                                    <select 
+                                                    name="existingCondition" 
+                                                    id="existingCondition" 
+                                                    className="input-primary px-6 focus:outline-none" 
+                                                    {...register(`dependants.${index}.existingCondition`, {
+                                                        value: dependantExistingCondition,
+                                                        onChange: (e) => setdependantExistingCondition(e.target.value)
+                                                    })}>
+                                                        <option value="true">True</option>
+                                                        <option value="false">False</option>
                                                     </select>
                                                 </div>
-                                                <div className="flex flex-col flex-1">
-                                                    <label htmlFor="health-condition">Health Condition</label>
-                                                    <input  className="input-primary px-6 focus:outline-none" name="health-condition" id="health-condition" {...register(`dependants.${index}.healthCondition`)} />
-                                                </div>
+                                                {dependantExistingCondition == "true" && (
+                                                    <div className="flex flex-col flex-1">
+                                                        <label htmlFor="health-condition">Health Condition</label>
+                                                        <input  className="input-primary px-6 focus:outline-none" name="health-condition" id="health-condition" {...register(`dependants.${index}.healthCondition`)} />
+                                                    </div>
+
+                                                )}
                                             </div>
 
-                                            <div className="flex justify-between gap-x-3">
-                                                <div className="flex flex-col  w-4/12">
-                                                    <label htmlFor="condition-duration">Condition Duration</label>
-                                                    <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.conditionDuration`)} />
-                                                        
+                                            {dependantExistingCondition == "true" && (
+
+                                                <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
+                                                    <div className="flex flex-col  lg:w-4/12">
+                                                        <label htmlFor="condition-duration">Condition Duration</label>
+                                                        <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.conditionDuration`)} />
+                                                            
+                                                    </div>
+                                                    <div className="flex flex-col flex-1">
+                                                        <label htmlFor="condition-medication">Condition Medication</label>
+                                                        <input  className="input-primary px-6 focus:outline-none" name="condition-medication" id="condition-medication" {...register(`dependants.${index}.conditionMedication`)}  />
+                                                    </div>
                                                 </div>
-                                                <div className="flex flex-col flex-1">
-                                                    <label htmlFor="condition-medication">Condition Medication</label>
-                                                    <input  className="input-primary px-6 focus:outline-none" name="condition-medication" id="condition-medication" {...register(`dependants.${index}.conditionMedication`)}  />
-                                                </div>
-                                            </div>
+                                            )}
 
                                             
                                             <div>
@@ -609,7 +616,7 @@ function Individual() {
                                             </tr>
                                             <tr className="">
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Gender</span>  <br /> <span className="text-black font-medium text-lg">{gender}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob.toLocaleDateString()}</span> </td>
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Email</span>  <br /> <span className="text-black font-medium text-lg">{email}</span> </td>
                                             </tr>
                                             <tr>
