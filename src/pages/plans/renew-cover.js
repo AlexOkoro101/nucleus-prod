@@ -191,14 +191,30 @@ function RenewCover() {
                             <table className="table-fixed w-full">
                                 <tbody>
                                     <tr className="">
-                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Amount</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_amount}</span>  </td>
-                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Type</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_type}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Amount</span>  <br />
+                                         {/* <span className="text-black font-medium text-lg">{transDetail?.order_amount}</span>  */}
+                                         <input className='border p-2 text-base font-medium outline-none w-full' type="text" value={transDetail?.order_amount} />
+                                        </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Type</span>  <br /> 
+                                            {/* <span className="text-black font-medium text-lg">{transDetail?.order_type}</span>  */}
+                                            <select className="border p-2 text-base font-medium outline-none w-full" value={transDetail?.order_type}>
+                                                <option value={transDetail?.order_type}>{transDetail?.order_type}</option>
+                                            </select>
+                                        </td>
                                         <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Plan Name</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.plan.plan_name}</span> </td>
                                     </tr>
                                     <tr className="">
-                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Plan Tenure</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.plan.plan_tenure}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Plan Tenure</span>  <br /> 
+                                            {/* <span className="text-black font-medium text-lg">{transDetail?.plan.plan_tenure}</span>  */}
+                                            <select className="border p-2 text-base font-medium outline-none w-full" value={transDetail?.plan.plan_tenure}>
+                                                <option value={transDetail?.plan.plan_tenure}>{transDetail?.plan.plan_tenure}</option>
+                                            </select>
+                                        </td>
                                         <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Status</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_status}</span> </td>
-                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.entity.entity_hospital}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Hospital</span>  <br /> 
+                                        {/* <span className="text-black font-medium text-lg">{transDetail?.entity.entity_hospital}</span>  */}
+                                        <input className='border p-2 text-base font-medium outline-none w-full' type="text" value={transDetail?.entity.entity_hospital || "N/A"} />
+                                        </td>
                                     </tr>
                                     
                                 </tbody>

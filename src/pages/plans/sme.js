@@ -40,6 +40,8 @@ function SME() {
     const [companyIndustry, setcompanyIndustry] = useState("")
     const [companyCAC, setcompanyCAC] = useState("")
 
+    const [terms, setterms] = useState(true)
+
 
 
 
@@ -400,13 +402,13 @@ function SME() {
 
                         </div>
 
-                        <div className="flex gap-x-2 mb-3 mt-14 items-center">
-                            <input type="checkbox" name="terms" id="terms" />
+                        <div className="flex gap-x-2 mb-3 mt-14 items-center"> 
+                            <input type="checkbox" name="terms" id="terms" checked={terms} onChange={() => setterms(!terms)} />
                             <p className="text-black font-bold text-base">Agree to our<span className="color-primary"> Terms and conditions</span></p>
                         </div>
 
                         <div>
-                            <input type="submit" className="cursor-pointer individual-btn mb-14" />
+                            <button type="submit" className={"cursor-pointer individual-btn mb-14 " + (!terms && "opacity-50 cursor-not-allowed")}>Proceed</button>
                         </div>
                         
                     </form>
@@ -418,7 +420,7 @@ function SME() {
                                 <p>{planDetails?.plan.planName}</p>
                             </div>
 
-                            <h1 className="header mt-9 mb-10">Personal Details</h1>
+                            <h1 className="header mt-9 mb-10">Company Details</h1>
 
                             <table className="table-fixed w-full">
                                 <tbody>
