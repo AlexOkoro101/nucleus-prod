@@ -25,7 +25,7 @@ function Testimonials() {
 
             <div>
                 <Slider {...settings}>
-                <div className="bg-white lg:px-32 px-8 pt-11 pb-20 testimony-container justify-between gap-x-6">
+                <div className="bg-white lg:px-32 px-4 pt-4 pb-4 testimony-container justify-between gap-x-6">
                     <div className="dp">
                         <div></div>
                     </div>

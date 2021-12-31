@@ -195,7 +195,7 @@ function SME() {
         .then(result => {
             console.log(result)
             if(result.status) {
-                window.open(result.data.link)
+                window.location.assign(result.data.link)
             }
         })
         .catch(error => console.log('error', error));
@@ -210,15 +210,15 @@ function SME() {
 
                 </div>
             ) : (
-            <div className="px-52 font-primary">
+            <div className="lg:px-52 px-8 font-primary">
                 <div className="form">
                 {!confrimDetail ? (
                     <form onSubmit={handleSubmit(submitForm)}>
 
                         <h1 className="header mt-9 mb-10">Corporate Details</h1>
 
-                        <div className="flex flex-col gap-y-6">
-                            <div className="flex justify-between gap-x-3">
+                        <div className="flex flex-col gap-y-6 mb-10">
+                            <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
                                 <div className="flex flex-col flex-1">
                                     <label htmlFor="company-name">Company Name</label>
                                     <input value={companyName} onChange={(e) => setcompanyName(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="company-name" id="company-name" />
@@ -233,8 +233,8 @@ function SME() {
                                 </div>
                             </div>
 
-                            <div className="flex justify-between gap-x-3">
-                                <div className="flex flex-col w-4/12">
+                            <div className="flex flex-col md:flex-row justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
+                                <div className="flex flex-col lg:w-4/12 ">
                                     <label htmlFor="company-phone">Company Phone No.</label>
                                     <input value={companyPhone} onChange={(e) => setcompanyPhone(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="company-phone" id="company-phone" />
                                 </div>
@@ -263,8 +263,8 @@ function SME() {
                                         <h1 className="header mt-9 mb-10">Enrollee {`- ${index + 1}`}</h1>
 
 
-                                        <div className="flex flex-col gap-y-6">
-                                            <div className="flex justify-between gap-x-3">
+                                        <div className="flex flex-col gap-y-6 mb-10">
+                                            <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
                                                 <div className="flex flex-col flex-1">
                                                     <label>First Name</label>
                                                     <input {...register(`enrollees.${index}.enrolleeFirstName`)} className="input-primary px-6 focus:outline-none" type="text" />
@@ -279,8 +279,8 @@ function SME() {
                                                 </div>
                                             </div>
 
-                                            <div className="flex justify-between gap-x-3">
-                                                <div className="flex flex-col w-4/12">
+                                            <div className="flex flex-col md:flex-row justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
+                                                <div className="flex flex-col lg:w-4/12">
                                                     <label>Company Phone No.</label>
                                                     <input {...register(`enrollees.${index}.enrolleePhone`)} className="input-primary px-6 focus:outline-none" type="tel" />
                                                 </div>
@@ -422,7 +422,33 @@ function SME() {
 
                             <h1 className="header mt-9 mb-10">Company Details</h1>
 
-                            <table className="table-fixed w-full">
+                            <table className="table-fixed w-full block md:hidden">
+                                <tbody className="w-full table">
+                                    <tr className="">
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Company Name</span>  <br /> <span className="text-black font-medium text-lg">{companyName}</span>  </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">RC Number</span>  <br /> <span className="text-black font-medium text-lg">{companyCAC}</span> </td>
+                                    </tr>
+                                    <tr>
+
+                                        <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Company Email</span>  <br /> <span className="text-black font-medium text-lg">{companyEmail}</span> </td>
+                                    </tr>
+                                    <tr className="">
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Company Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{companyPhone}</span> </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Industry</span>  <br /> <span className="text-black font-medium text-lg">{companyIndustry}</span> </td>
+                                    </tr>
+
+                                    <tr>
+                                        
+                                        <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Company Address</span>  <br /> <span className="text-black font-medium text-lg">{companyAddress}</span> </td>
+                                    </tr>
+                                  
+                                    <tr>
+                                        <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold text-lg">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <table className="table-fixed w-full hidden md:block">
                                 <tbody>
                                     <tr className="">
                                         <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Company Name</span>  <br /> <span className="text-black font-medium text-lg">{companyName}</span>  </td>

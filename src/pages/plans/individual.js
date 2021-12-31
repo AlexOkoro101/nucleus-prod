@@ -279,7 +279,7 @@ function Individual() {
         .then(result => {
             console.log(result)
             if(result.status) {
-                window.open(result.data.link)
+                window.location.assign(result.data.link)
             }
         })
         .catch(error => console.log('error', error));
@@ -607,31 +607,66 @@ function Individual() {
                                         </div>
                                     </div>
 
-                                    <table className="table-fixed w-full">
-                                        <tbody>
+                                    <table className="table-fixed w-full md:hidden block">
+                                        <tbody className="w-full table">
                                             <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">First Name</span>  <br /> <span className="text-black font-medium text-lg">{fname}</span>  </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{lname}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{mname}</span> </td>
-                                            </tr>
-                                            <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Gender</span>  <br /> <span className="text-black font-medium text-lg">{gender}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob.toLocaleDateString()}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Email</span>  <br /> <span className="text-black font-medium text-lg">{email}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">First Name</span>  <br /> <span className="text-black font-medium text-lg">{fname}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{lname}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{phone}</span> </td>
-                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold text-lg">Address</span>  <br /> <span className="text-black font-medium text-lg">{address}</span> </td>
+                                                <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{mname}</span> </td>
+
+                                            </tr>
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Gender</span>  <br /> <span className="text-black font-medium text-lg">{gender}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob.toLocaleDateString()}</span> </td>
+                                            </tr>
+                                            <tr>
+
+                                                <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Email</span>  <br /> <span className="text-black font-medium text-lg">{email}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{phone}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-lg text-base">Address</span>  <br /> <span className="text-black font-medium text-lg">{address}</span> </td>
                                             </tr>
                                             <tr className="bg-gray-300">
                                                 <td className="p-3 font-semibold text-lg" colSpan="3">Hospital Details</td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Location</span>  <br /> <span className="text-black font-medium text-lg">{hospitalAddress}</span> </td>
-                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold text-lg">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{hospital}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Location</span>  <br /> <span className="text-black font-medium text-lg">{hospitalAddress}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-lg text-base">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{hospital}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold text-lg">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-lg text-base">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <table className="table-fixed w-full hidden md:block">
+                                        <tbody>
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">First Name</span>  <br /> <span className="text-black font-medium text-lg">{fname}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{lname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{mname}</span> </td>
+                                            </tr>
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Gender</span>  <br /> <span className="text-black font-medium text-lg">{gender}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob.toLocaleDateString()}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Email</span>  <br /> <span className="text-black font-medium text-lg">{email}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{phone}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-lg text-base">Address</span>  <br /> <span className="text-black font-medium text-lg">{address}</span> </td>
+                                            </tr>
+                                            <tr className="bg-gray-300">
+                                                <td className="p-3 font-semibold text-lg" colSpan="3">Hospital Details</td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Location</span>  <br /> <span className="text-black font-medium text-lg">{hospitalAddress}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-lg text-base">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{hospital}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-lg text-base">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
                                             </tr>
                                         </tbody>
                                     </table>

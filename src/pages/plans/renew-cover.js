@@ -123,7 +123,7 @@ function RenewCover() {
             setisloading(false)
             console.log(result)
             if(result.status == true) {
-                window.open(result.data.link)
+                window.location.assign(result.data.link)
             }
         })
         .catch(error => console.log('error', error));
@@ -188,7 +188,7 @@ function RenewCover() {
                                 </div>
                             </div>
 
-                            <table className="table-fixed w-full">
+                            <table className="table-fixed w-full hidden md:block">
                                 <tbody>
                                     <tr className="">
                                         <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Amount</span>  <br />
@@ -215,6 +215,43 @@ function RenewCover() {
                                         {/* <span className="text-black font-medium text-lg">{transDetail?.entity.entity_hospital}</span>  */}
                                         <input className='border p-2 text-base font-medium outline-none w-full' type="text" value={transDetail?.entity.entity_hospital || "N/A"} />
                                         </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+
+                            <table className="table-fixed w-full block md:hidden">
+                                <tbody className="w-full table">
+                                    <tr className="">
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold lg:text-lg text-base">Amount</span>  <br />
+                                         {/* <span className="text-black font-medium text-lg">{transDetail?.order_amount}</span>  */}
+                                         <input className='border p-2 text-base font-medium outline-none w-full' type="text" value={transDetail?.order_amount} />
+                                        </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold lg:text-lg text-base">Type</span>  <br /> 
+                                            {/* <span className="text-black font-medium text-lg">{transDetail?.order_type}</span>  */}
+                                            <select className="border p-2 text-base font-medium outline-none w-full" value={transDetail?.order_type}>
+                                                <option value={transDetail?.order_type}>{transDetail?.order_type}</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold lg:text-lg text-base">Plan Name</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.plan.plan_name}</span> </td>
+                                    </tr>
+                                    <tr className="">
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold lg:text-lg text-base">Plan Tenure</span>  <br /> 
+                                            {/* <span className="text-black font-medium text-lg">{transDetail?.plan.plan_tenure}</span>  */}
+                                            <select className="border p-2 text-base font-medium outline-none w-full" value={transDetail?.plan.plan_tenure}>
+                                                <option value={transDetail?.plan.plan_tenure}>{transDetail?.plan.plan_tenure}</option>
+                                            </select>
+                                        </td>
+                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold lg:text-lg text-base">Status</span>  <br /> <span className="text-black font-medium text-lg">{transDetail?.order_status}</span> </td>
+                                    </tr>
+                                    <tr>
+                                        <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold lg:text-lg text-base">Hospital</span>  <br /> 
+                                        {/* <span className="text-black font-medium text-lg">{transDetail?.entity.entity_hospital}</span>  */}
+                                        <input className='border p-2 text-base font-medium outline-none w-full' type="text" value={transDetail?.entity.entity_hospital || "N/A"} />
+                                        </td>
+
                                     </tr>
                                     
                                 </tbody>

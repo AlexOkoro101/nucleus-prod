@@ -29,7 +29,7 @@ function CustomerExpectation() {
                 <div className="question">
                     <div className="flex justify-between items-center">
                         <div>
-                            <p className="text-black font-extrabold text-xl">Have any question about us?</p>
+                            <p className="text-black font-extrabold lg:text-xl text-base">Have any question about us?</p>
                             <p className="text-xs color-secondary font-medium text-left">Don’t hesitate tocontact us</p>
                         </div>
                         <button className="contact-get-started">Get started</button>

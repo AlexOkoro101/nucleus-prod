@@ -19,7 +19,7 @@ function BuyCover() {
                     <p className="font-bold text-2xl mb-6">Private health <br /> Insurance Packages</p>
                     <p className="font-medium insurance-caption">Lorem ipsum dolor sit amet, <br /> consectetur adipiscing elit.</p>
                 </div>
-                <div className="flex justify-around lg:gap-x-20 lg:px-80 px-8 lg:mb-44 mb-14">
+                <div className="flex justify-around lg:gap-x-20 gap-x-2 lg:px-80 px-8 lg:mb-44 mb-14">
                     <div>
                         <img src={buycover1} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Young Professional</p>
@@ -33,7 +33,7 @@ function BuyCover() {
                         <Link to='/buy-cover/family' className="buycover-getstarted">Get Started</Link>
                     </div>
                 </div>
-                <div className="flex justify-around lg:gap-x-20 lg:px-80 px-8 mb-14">
+                <div className="flex justify-around lg:gap-x-20 gap-x-2 lg:px-80 px-8 mb-14">
                     <div>
                         <img src={buycover3} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">SMEs</p>

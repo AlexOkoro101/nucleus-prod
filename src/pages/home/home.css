@@ -156,12 +156,35 @@
     }
     .dp {
         width: 250px;
+        height: 73px;
     }
     .clients {
         width: 100%;
         left: 0;
+        overflow: scroll;
     }
     .clients img {
         height: 1.7rem;
+    }
+    .question {
+        padding: 15px;
+    }
+    .contact-get-started {
+        padding: 8px 18px;
+        font-size: 12px;
+    }
+    .slick-dots {
+        display: inline-flex !important;
+        width: 300px;
+        overflow: scroll;
+    }
+    .slick-dots li {
+        height: 100px;
+    }
+    .slick-dots {
+        bottom: -40px;
+    }
+    .slick-slider {
+        margin-bottom: 70px;
     }
 }
