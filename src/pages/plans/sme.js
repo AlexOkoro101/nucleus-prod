@@ -449,7 +449,7 @@ function SME() {
                             </table>
 
                             <table className="table-fixed w-full hidden md:block">
-                                <tbody>
+                                <tbody className="w-full table">
                                     <tr className="">
                                         <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">Company Name</span>  <br /> <span className="text-black font-medium text-lg">{companyName}</span>  </td>
                                         <td className="p-4 border border-gray-200"><span className="color-primary font-semibold text-lg">RC Number</span>  <br /> <span className="text-black font-medium text-lg">{companyCAC}</span> </td>

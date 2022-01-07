@@ -643,7 +643,7 @@ function Individual() {
                                     </table>
 
                                     <table className="table-fixed w-full hidden md:block">
-                                        <tbody>
+                                        <tbody className="w-full table">
                                             <tr className="">
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">First Name</span>  <br /> <span className="text-black font-medium text-lg">{fname}</span>  </td>
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{lname}</span> </td>
