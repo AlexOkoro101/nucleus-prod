@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import client1 from '../../assets/img/client1.png';
 import client2 from '../../assets/img/client2.png';
 import client3 from '../../assets/img/client3.svg';
@@ -6,6 +7,8 @@ import client4 from '../../assets/img/client4.svg';
 import client5 from '../../assets/img/client5.svg';
 
 function ReadyTalk() {
+    const history = useHistory()
+
     return (
         <>
             <div className="lg:px-40 px-8 bg-primary font-primary">
@@ -14,7 +17,7 @@ function ReadyTalk() {
                         <p className="pt-9 font-extrabold text-3xl mb-1 text-white">Ready to Talk?</p>
                         <p className="font-medium text-xs text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris</p>
 
-                        <button className="contact-us-btn">Contact Us</button>
+                        <button onClick={() => history.push('/contact')} className="contact-us-btn">Contact Us</button>
 
                         <p className="text-xl font-medium contact-stats">More that 1.5 million individuals use NucleusIS</p>
 

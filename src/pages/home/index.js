@@ -22,7 +22,7 @@ function Home() {
                         <Link to='/buy-cover' className="buy-cover-button">Buy Cover</Link>
                         <Link to='/buy-cover/renew' className="transparent-button">Renew Cover</Link>
                     </div>
-                    <Link className="main-button lg:w-3/12 md:w-9/12 w-full text-center md:text-left">Buy cover with loan</Link>
+                    <Link to="/" className="main-button lg:w-3/12 md:w-9/12 w-full text-center md:text-left">Buy cover with loan</Link>
                 </div>
             </div>
 
