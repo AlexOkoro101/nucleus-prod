@@ -9,6 +9,8 @@ import SME from "./pages/plans/sme";
 import RenewCover from "./pages/plans/renew-cover";
 import Success from "./pages/plans/shared/success";
 import Failure from "./pages/plans/shared/failure";
+import About from "./pages/about";
+import Contact from "./pages/contact";
 
 function App() {
   return (
@@ -41,6 +43,12 @@ function App() {
             </Route>
             <Route exact path="/payment/failure">
                 <Failure></Failure>
+            </Route>
+            <Route exact path="/about">
+              <About></About>
+            </Route>
+            <Route exact path="/contact">
+              <Contact></Contact>
             </Route>
           </Switch>
         </div>

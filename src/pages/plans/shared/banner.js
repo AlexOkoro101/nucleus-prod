@@ -5,7 +5,7 @@ function Banner({bannerHeader}) {
     return (
         <div className="banner font-primary mb-28 bg-cover">
             <div className="banner-opacity ">
-                <p className="font-extrabold text-4xl text-white">{bannerHeader}</p>
+                <h1 className="font-extrabold text-4xl text-white">{bannerHeader}</h1>
             </div>
         </div>
     )

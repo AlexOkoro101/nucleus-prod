@@ -8,7 +8,7 @@ import client5 from '../../assets/img/client5.svg';
 function ReadyTalk() {
     return (
         <>
-            <div className="lg:px-40 px-8 bg-primary">
+            <div className="lg:px-40 px-8 bg-primary font-primary">
                 <div className="text-center">
                     <div className="header pb-20">
                         <p className="pt-9 font-extrabold text-3xl mb-1 text-white">Ready to Talk?</p>
