@@ -16,7 +16,7 @@ function Home() {
             <div className="home-banner h-screen">
                 <div className="banner-content h-full flex flex-col justify-center lg:p-40 p-8 bg-black bg-opacity-50">
                     <h1 className="text-white lg:text-6xl text-4xl font-extrabold mb-8">Buy the health insurance that works for you and your family</h1>
-                    <p className="text-white text-sm mb-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate quasi atque harum. Modi sed sit minus obcaecati, debitis tenetur deserunt perspiciatis, provident, dignissimos nostrum vero!</p>
+                    <p className="text-white text-sm mb-6">Get affordable health insurance products across Africa for YOU, YOUR FAMILY, YOUR DEPENDANTS and YOUR EMPLOYEES</p>
 
                     <div className="home-buttons flex mb-5 gap-x-5">
                         <Link to='/buy-cover' className="buy-cover-button">Buy Cover</Link>

@@ -28,11 +28,11 @@ function Footer() {
                     <div className="flex-1 mt-12">
                         <p className="lg:pl-8 pl-0 text-xl text-black mb-9 font-bold">Support</p>
                         <ul className="lg:pl-8 pl-0">
-                            <li><Link to="/about">FAQs</Link></li>
-                            <li><Link to="/about">Privacy Policy</Link></li>
-                            <li><Link to="/about">Terms & Conditions</Link></li>
-                            <li><Link to="/about">Community</Link></li>
-                            <li><Link to="/about">Contact Us</Link></li>
+                            <li><Link to="/faq">FAQs</Link></li>
+                            <li><Link to="/privacy">Privacy Policy</Link></li>
+                            <li><Link to="/terms">Terms & Conditions</Link></li>
+                            <li><Link to="/community">Community</Link></li>
+                            <li><Link to="/contact">Contact Us</Link></li>
                         </ul>
                     </div>
 

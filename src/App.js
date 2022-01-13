@@ -11,6 +11,7 @@ import Success from "./pages/plans/shared/success";
 import Failure from "./pages/plans/shared/failure";
 import About from "./pages/about";
 import Contact from "./pages/contact";
+import Privacy from "./pages/privacy";
 
 function App() {
   return (
@@ -49,6 +50,11 @@ function App() {
             </Route>
             <Route exact path="/contact">
               <Contact></Contact>
+            </Route>
+
+
+            <Route exact path="/privacy">
+              <Privacy></Privacy>
             </Route>
           </Switch>
         </div>
