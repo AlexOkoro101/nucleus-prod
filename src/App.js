@@ -12,6 +12,8 @@ import Failure from "./pages/plans/shared/failure";
 import About from "./pages/about";
 import Contact from "./pages/contact";
 import Privacy from "./pages/privacy";
+import Terms from "./pages/terms";
+import IndividualLoan from "./pages/plans/loan/individualLoan";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
             <Route exact path="/">
               <Home></Home>
             </Route>
+
+            {/* Functional */}
             <Route exact path="/buy-cover">
               <BuyCover></BuyCover>
             </Route>
@@ -39,23 +43,35 @@ function App() {
             <Route path="/buy-cover/renew">
               <RenewCover></RenewCover>
             </Route>
+
+            <Route path="/buy-cover/individualLoan">
+              <IndividualLoan></IndividualLoan>
+            </Route>
+
+            {/* Transaction */}
             <Route exact path="/payment/success">
                 <Success></Success>
             </Route>
             <Route exact path="/payment/failure">
                 <Failure></Failure>
             </Route>
+
+            {/* Static Pages */}
             <Route exact path="/about">
               <About></About>
             </Route>
             <Route exact path="/contact">
               <Contact></Contact>
             </Route>
-
-
             <Route exact path="/privacy">
               <Privacy></Privacy>
             </Route>
+            <Route exact path="/terms">
+              <Terms></Terms>
+            </Route>
+
+
+            
           </Switch>
         </div>
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './buycover.css'
 import buycover1 from '../../assets/img/buycover1.png';
 import buycover2 from '../../assets/img/buycover2.png';
@@ -11,6 +11,14 @@ import { useHistory, Link } from 'react-router-dom';
 
 function BuyCover() {
     const history = useHistory()
+    const [type, settype] = useState(null)
+
+    useEffect(() => {
+        const type = localStorage.getItem('type')
+        if(type) {
+            settype(type)
+        }
+    }, [])
 
     return (
         <div className="buy-cover mt-24 font-primary">
@@ -24,7 +32,11 @@ function BuyCover() {
                         <img src={buycover1} alt="buycover" className="inline-block" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Young Professional</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <Link to='/buy-cover/individual' className="buycover-getstarted">Get Started</Link>
+                        {type == 'loan' ? (
+                            <Link to='/buy-cover/individualLoan' className="buycover-getstarted">Get Started</Link>
+                        ) : (
+                            <Link to='/buy-cover/individual' className="buycover-getstarted">Get Started</Link>
+                        )}
                     </div>
                     <div>
                         <img src={buycover2} alt="buycover" className="inline-block" />

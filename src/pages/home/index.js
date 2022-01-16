@@ -19,10 +19,10 @@ function Home() {
                     <p className="text-white text-sm mb-6">Get affordable health insurance products across Africa for YOU, YOUR FAMILY, YOUR DEPENDANTS and YOUR EMPLOYEES</p>
 
                     <div className="home-buttons flex mb-5 gap-x-5">
-                        <Link to='/buy-cover' className="buy-cover-button">Buy Cover</Link>
+                        <Link onClick={() => localStorage.setItem('type', 'default')} to='/buy-cover' className="buy-cover-button">Buy Cover</Link>
                         <Link to='/buy-cover/renew' className="transparent-button">Renew Cover</Link>
                     </div>
-                    <Link to="/" className="main-button lg:w-3/12 md:w-9/12 w-full text-center md:text-left">Buy cover with loan</Link>
+                    <Link onClick={() => localStorage.setItem('type', 'loan')} to="/buy-cover" className="main-button lg:w-3/12 md:w-9/12 w-full text-center md:text-left">Buy cover with loan</Link>
                 </div>
             </div>
 
