@@ -1510,6 +1510,11 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@soywod/pin-field@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@soywod/pin-field/-/pin-field-0.2.1.tgz#9accc7bd0a0dbbf68da549088cf12276cb12d743"
+  integrity sha512-WgdLL+o/4POFfwyYlJPz9Tan7fVWk0bxW0AiNYY08lMm0GTFfprMJcRiG3gcPFuSHXCLt5VAsmRHPgj7jZh8TA==
+
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-1.4.2.tgz#e6786b6af5799f82f7ab3a82e53f6182d2b91a58"
@@ -9489,6 +9494,11 @@ react-onclickoutside@^6.12.0:
   version "6.12.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.12.1.tgz#92dddd28f55e483a1838c5c2930e051168c1e96b"
   integrity sha512-a5Q7CkWznBRUWPmocCvE8b6lEYw1s6+opp/60dCunhO+G6E4tDTO2Sd2jKE+leEnnrLAE2Wj5DlDHNqj5wPv1Q==
+
+react-pin-field@^2.0.0-beta.2:
+  version "2.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/react-pin-field/-/react-pin-field-2.0.0-beta.2.tgz#04a087a0db4e1460f1ef6ebcb21428f20dcd5ca4"
+  integrity sha512-nqqZPR6beTeNG5WtieCvmxDXqYbIOEhAn//oTcfIw7+yUfO4OrWh+7COmkUCyknSZdxbQ2kxq+xwMaOa1ot66A==
 
 react-popper@^2.2.5:
   version "2.2.5"

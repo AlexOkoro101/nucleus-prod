@@ -1,5 +1,5 @@
 import Navbar from "./components/navbar";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, useLocation} from 'react-router-dom';
 import Home from "./pages/home";
 import Footer from "./components/footer";
 import BuyCover from "./pages/buy-cover";
@@ -14,8 +14,11 @@ import Contact from "./pages/contact";
 import Privacy from "./pages/privacy";
 import Terms from "./pages/terms";
 import IndividualLoan from "./pages/plans/loan/individualLoan";
+import OTP from "./pages/plans/loan/otp";
+import { useEffect, useState } from "react";
 
 function App() {
+
   return (
     <Router>
       <div className="App">
@@ -69,14 +72,18 @@ function App() {
             <Route exact path="/terms">
               <Terms></Terms>
             </Route>
-
-
+            <Route exact path="/validate">
+              <OTP></OTP>
+            </Route>
             
           </Switch>
         </div>
 
         <Footer></Footer>
       </div>
+
+      
+           
 
     </Router>
   );

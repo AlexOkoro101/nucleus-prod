@@ -40,7 +40,7 @@ function IndividualLoan() {
         });
 
     //Hooks
-    const [confrimDetail, setconfrimDetail] = useState(false)
+    const [confrimDetail, setconfrimDetail] = useState(1)
     const [planDetails, setplanDetails] = useState(null)
     const [initialPageName, setinitialPageName] = useState("Individual Plan")
 
@@ -57,7 +57,7 @@ function IndividualLoan() {
     const [mname, setmname] = useState("")
     const [email, setemail] = useState("")
     const [phone, setphone] = useState("")
-    const [gender, setgender] = useState("")
+    const [gender, setgender] = useState("Male")
     const [dob, setdob] = useState(new Date())
     const [address, setaddress] = useState("")
     const [hospital, sethospital] = useState("")
@@ -70,7 +70,18 @@ function IndividualLoan() {
     const [dependentArray, setdependentArray] = useState([])
     const [dependantExistingCondition, setdependantExistingCondition] = useState("false")
     const [dependantDob, setdependantDob] = useState(new Date())
-    // console.log(new Date().toLocaleDateString())
+
+    //Card Details
+    const [cardNumber, setcardNumber] = useState("")
+    const [cardExpiry, setcardExpiry] = useState("")
+    const [cardCVV, setcardCVV] = useState("")
+    const [cardPIN, setcardPIN] = useState("")
+    const [cardFullname, setcardFullname] = useState("")
+    const [cardEmail, setcardEmail] = useState("")
+    const [cardPhone, setcardPhone] = useState("")
+
+    //window call back
+    const [openedWindow, setopenedWindow] = useState(null)
     
 
 
@@ -81,10 +92,28 @@ function IndividualLoan() {
             getPlanDetails()
         }
     }, [])
+
+    useEffect(() => {
+        checkWindowClosed()
+        return () => {
+            checkWindowClosed()
+        }
+    }, [openedWindow?.closed])
     //End of Hooks
 
 
+
     //Functions
+    const checkWindowClosed = () => {
+        // console.log(openedWindow?.closed);
+        if(openedWindow?.closed == false) {
+            console.log("Running verify");
+            cardCollectionVerify()
+        }
+    }
+
+
+
     const chooseImage = () => {
         document.getElementById('photo').click();  
         
@@ -138,7 +167,7 @@ function IndividualLoan() {
         // setdependentArray(data.dependants.map())
 
         setinitialPageName("Confirm Details")
-        setconfrimDetail(true)
+        setconfrimDetail(2)
     
 
     }
@@ -169,34 +198,6 @@ function IndividualLoan() {
         });
     }
 
-    // const addDependants = () => {
-    //     setdependants([...dependants, dependatObj]);
-    //     console.log(dependants)
-    // }
-
-    // const removeDependant = (index) => {
-    //     console.log(index)
-    //     const newArray = dependants.filter((dependant, id) => {
-    //         return id !== index
-    //     })
-    //     setdependants(newArray)
-    // }
-
-    // const setFirstName = (e, id) => {
-    //     // console.log(e.target?.getAttribute("name"))
-    //     // // console.log(index)
-
-    //     // dependants[index].firstName.value = e.target.value
-    //     var obj = dependants.map((dependant, index) => {
-    //         if(index == id) {
-    //             dependant.firstName.value = e.target.value
-    //         }
-    //         return dependant;
-            
-    //     })
-    //     setdependants(obj)
-        
-    // }
 
     const buyPlan = () => {
         setisloadingPayment(true)
@@ -253,7 +254,51 @@ function IndividualLoan() {
             setisloadingPayment(false)
             console.log(result)
             if(result.status) {
-                generateLink(result.data)
+                setconfrimDetail(3)
+                setinitialPageName("Card Details")
+                localStorage.setItem('orderRef', result.data.orderRef)
+            }
+
+        })
+        .catch(error => console.log('error', error));
+    }
+
+    const payWithCard = () => {
+        setisloadingPayment(true)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+        "cardNumber": cardNumber,
+        "cvv": cardCVV,
+        "expiry": cardExpiry,
+        "cardPin": cardPIN,
+        "phoneNumber": cardPhone,
+        "fullname": cardFullname,
+        "email": cardEmail
+        });
+
+        var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+        };
+
+        fetch(enviroment.BASE_URL + "card/collection", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            setisloadingPayment(false)
+            console.log(result)
+            if(result.status) {
+                if(result.data.meta.authorization.mode == "otp") {
+                    localStorage.setItem('transData', JSON.stringify(result.data))
+                    history.push('/validate')
+                } else {
+                    localStorage.setItem('transData', JSON.stringify(result.data))
+                    setopenedWindow(window.open(result.data.meta.authorization.redirect, "", "width=500, height=700"))
+                }
             }
 
         })
@@ -261,33 +306,79 @@ function IndividualLoan() {
     }
 
 
-    const generateLink = (data) => {
+    function formatString(event) {
+        var inputChar = String.fromCharCode(event.keyCode);
+        var code = event.keyCode;
+        var allowedKeys = [8];
+        if (allowedKeys.indexOf(code) !== -1) {
+          return;
+        }
+      
+        event.target.value = event.target.value.replace(
+          /^([1-9]\/|[2-9])$/g, '0$1/' // 3 > 03/
+        ).replace(
+          /^(0[1-9]|1[0-2])$/g, '$1/' // 11 > 11/
+        ).replace(
+          /^([0-1])([3-9])$/g, '0$1/$2' // 13 > 01/3
+        ).replace(
+          /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2' // 141 > 01/41
+        ).replace(
+          /^([0]+)\/|[0]+$/g, '0' // 0/ > 0 and 00 > 0
+        ).replace(
+          /[^\d\/]|^[\/]*$/g, '' // To allow only digits and `/`
+        ).replace(
+          /\/\//g, '/' // Prevent entering more than 1 `/`
+        );
+    }
+      
+    const cardCollectionVerify = () => {
+        const item = JSON.parse(localStorage.getItem('transData'))
+        const orderRef = localStorage.getItem('orderRef')
+        var requestOptions = {
+            method: 'GET',
+            redirect: 'follow'
+        };
+          
+        fetch(enviroment.BASE_URL + `card/collection/verify/${item?.data?.id}/${orderRef}`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            if(result.status) {
+                verifyPlan(orderRef)
+            }
+        })
+        .catch(error => console.log('error', error));
+    }
+
+    const verifyPlan = (orderRef) => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "orderReference": data.orderRef
+            "orderRef": orderRef
         });
 
         var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
         };
 
-        fetch(enviroment.BASE_URL + "buy-plan/payment", requestOptions)
+        fetch(enviroment.BASE_URL + "buy-plan/payment/loan", requestOptions)
         .then(response => response.json())
         .then(result => {
             console.log(result)
+            setisloadingPayment(false)
             if(result.status) {
-                window.location.assign(result.data.link)
+                history.push('/payment/success')
+            } else {
+                history.push('/payment/failure')
             }
         })
         .catch(error => console.log('error', error));
     }
-
     
 
 
@@ -306,7 +397,7 @@ function IndividualLoan() {
             ) : (
                 <div className="lg:px-40 px-8 font-primary">
                     <div className="form">
-                        {!confrimDetail ? (
+                        {confrimDetail == 1 && (
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <h1 className="header mb-3">Plan Details</h1>
                                 <div>
@@ -604,7 +695,8 @@ function IndividualLoan() {
                                 
                             </form>
 
-                        ) : (
+                        )} 
+                        {confrimDetail == 2 &&  (
                             <div className="confirm-cover-details">
                                 <div>
                                     <h1 className="header mb-3">Plan Details</h1>
@@ -699,6 +791,62 @@ function IndividualLoan() {
                                     
                                 </div>
                             </div>
+                        )}
+
+                        {confrimDetail == 3 && (
+                            <form className="lg:px-40 px-0" onSubmit={handleSubmit(submitForm)}>
+                                <h1 className="header mb-3">Card Details</h1>
+
+                                <div className="flex flex-col lg:flex-row justify-between lg:gap-x-3 lg:gap-y-0 gap-y-3 mb-10">
+                                    <div className="flex flex-col flex-1">
+                                        <label htmlFor="gender">Card Number</label>
+                                        <input value={cardNumber} onChange={(e) => setcardNumber(e.target.value)}  className="input-primary px-6 focus:outline-none" type="tel"  />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col lg:flex-row lg:gap-x-3 lg:gap-y-0 justify-between gap-y-3 mb-10">
+                                    <div className="flex flex-col flex-1">
+                                        <label htmlFor="phone">Expiry</label>
+                                        <input maxLength='5' value={cardExpiry} onChange={(e) => setcardExpiry(e.target.value)} onKeyUp={(e) => formatString(e)}  className="input-primary px-6 focus:outline-none" type="tel" />
+                                    </div>
+                                    <div className="flex flex-col flex-1">
+                                        <label htmlFor="address">CVV</label>
+                                        <input maxLength="3" value={cardCVV} onChange={(e) => setcardCVV(e.target.value)}  className="input-primary px-6 focus:outline-none" type="tel"  />
+                                    </div>
+
+                                    <div className="flex flex-col flex-1">
+                                        <label htmlFor="middle-name">Card PIN</label>
+                                        <input maxLength="4" value={cardPIN} onChange={(e) => setcardPIN(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text"/>
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-y-6 mb-10">
+                                    <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="first-name">Full Name</label>
+                                            <input value={cardFullname} onChange={(e) => setcardFullname(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" />
+                                        </div>
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="last-name">Email</label>
+                                            <input value={cardEmail} onChange={(e) => setcardEmail(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text" />
+                                        </div>
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="middle-name">Phone Number</label>
+                                            <input value={cardPhone} onChange={(e) => setcardPhone(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text" />
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div>
+                                    <button 
+                                    onClick={() => {
+                                    payWithCard()
+                                    
+                                    }}
+                                        type="button" className="individual-btn mb-14 uppercase">{isloadingPayment ? (<Spinner name="circle" color='#fff' fadeIn='none' />) : ("Proceed")}</button>
+                                </div>
+                            </form>
                         )}
 
                     </div>
