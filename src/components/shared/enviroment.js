@@ -1,4 +1,4 @@
 export const enviroment = {
-    BASE_URL: "http://sandbox.nucleusis.io/api/",
+    BASE_URL: "https://nucleusis-retail-api.herokuapp.com/",
     API_KEY: "NUC-1BsOLIJwQyLrqkICdZIO-X"
 }
