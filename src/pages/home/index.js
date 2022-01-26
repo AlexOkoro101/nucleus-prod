@@ -27,19 +27,19 @@ function Home() {
             </div>
 
             {/* insurance info section */}
-            <InsurancePackage></InsurancePackage>
+            {/* <InsurancePackage></InsurancePackage> */}
 
             {/* Oyo insurance agency */}
-            <OyoAgency></OyoAgency>
+            {/* <OyoAgency></OyoAgency> */}
 
             {/* Customer Expectation */}
-            <CustomerExpectation></CustomerExpectation>
+            {/* <CustomerExpectation></CustomerExpectation> */}
 
             {/* Testimonies */}
-            <Testimonials></Testimonials>
+            {/* <Testimonials></Testimonials> */}
 
             {/* Ready to talk */}
-            <ReadyTalk></ReadyTalk>
+            {/* <ReadyTalk></ReadyTalk> */}
         </div>
     )
 }

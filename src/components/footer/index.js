@@ -7,7 +7,7 @@ function Footer() {
     return (
         <div className="lg:px-40 px-8 footer font-primary">
             <div className="flex justify-between flex-col lg:flex-row footer-map pb-20">
-                <div className="flex-1">
+                {/* <div className="flex-1">
                     <img src={footerLogo} alt="footer-logo" />
 
                     <p className="text-color font-medium text-xs mt-10">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sit aliquet gravida rhoncus gravida. Volutpat consectetur Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris elementum sit aliquet gravida rhoncus gravida. Volutpat consectetur</p>
@@ -47,7 +47,7 @@ function Footer() {
                         <li><Link to="/about">Phone: + (xxx) xxx xxx</Link></li>
                         <li><Link to="/about">Fax: +x-xxx-xxxxxxx</Link></li>
                     </ul>
-                </div>
+                </div> */}
             </div>
             <div className="text-center mb-4">
                 <p className="copyright">Copyright @2021 <span>NucleusIS</span>. All rights reserved</p>
