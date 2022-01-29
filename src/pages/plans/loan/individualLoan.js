@@ -548,7 +548,7 @@ function IndividualLoan() {
                                             <input value={hospital} onChange={(e) => sethospital(e.target.value)} onBlur={populateAddress} className="input-primary px-6 focus:outline-none" type="text" list="hospitals" name="location" id="hospital-list" />
                                             <datalist id="hospitals">
                                                 {planDetails?.providers.map((hospital, index) => (
-                                                    <option id={index} value={hospital.name}>{hospital.name}</option>
+                                                    <option key={index} value={hospital.name}>{hospital.name}</option>
                                                 ))}
                                             </datalist>
                                         </div>
