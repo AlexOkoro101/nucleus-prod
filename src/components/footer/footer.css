@@ -1,10 +1,11 @@
 .footer {
-    background: #F7FAFD;
+    background: #fff;
 }
 .footer .footer-map {
-    background: url('../../assets/img/map.png');
+    /* background: url('../../assets/img/map.png'); */
     border-bottom: 0.5px solid #6084A4;
     margin-bottom: 31px;
+    background-color: white;
 }
 
 .text-color {
