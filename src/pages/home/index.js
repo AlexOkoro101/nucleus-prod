@@ -6,6 +6,9 @@ import OyoAgency from '../../components/sections/oyo-agency'
 import ReadyTalk from '../../components/sections/ready-talk'
 import Testimonials from '../../components/sections/testimonials'
 import './home.css'
+import image1 from "../../assets/img/health-insurance2.svg"
+import image2 from "../../assets/img/health-insurance1.svg"
+import image3 from "../../assets/img/health-insurance3.svg"
 
 function Home() {
     const history = useHistory()
@@ -14,23 +17,70 @@ function Home() {
     return (
         <div className="home font-primary">
             <div className="home-banner h-screen">
-                <div className="banner-content h-full flex flex-col justify-center lg:p-40 p-8 bg-black bg-opacity-50">
-                    <h1 className="text-white lg:text-6xl text-4xl font-extrabold mb-8">Buy the health insurance that works for you and your family</h1>
-                    <p className="text-white text-sm mb-6">Get affordable health insurance products across Africa for YOU, YOUR FAMILY, YOUR DEPENDANTS and YOUR EMPLOYEES</p>
+                <div className="banner-content h-full flex flex-col justify-center lg:px-64 lg:py-40 px-8 py-8 text-center">
+                    <h1 className="text-white lg:text-4xl text-2xl font-extrabold">Have access and buy health plans  </h1>
+                    <h1 className="text-white lg:text-4xl text-2xl font-extrabold mb-16">from Top HMOs in <span style={{color: "#ffea2f"}}>One Place</span></h1>
+                    <Link to='/buy-cover' className="new-button w-40 mx-auto rounded-xl inline-block">Learn More</Link>
+                    {/* <p className="text-white text-sm mb-6">Get affordable health insurance products across Africa for YOU, YOUR FAMILY, YOUR DEPENDANTS and YOUR EMPLOYEES</p> */}
 
-                    <div className="home-buttons flex mb-5 gap-x-5">
+                    {/* <div className="home-buttons flex mb-5 gap-x-5">
                         <Link onClick={() => localStorage.setItem('type', 'default')} to='/buy-cover' className="buy-cover-button">Buy Cover</Link>
                         <Link to='/buy-cover/renew' className="transparent-button">Renew Cover</Link>
                     </div>
-                    <Link onClick={() => localStorage.setItem('type', 'loan')} to="/buy-cover" className="main-button lg:w-3/12 md:w-9/12 w-full text-center md:text-left">Buy cover with loan</Link>
+                    <Link onClick={() => localStorage.setItem('type', 'loan')} to="/buy-cover" className="main-button lg:w-3/12 md:w-9/12 w-full text-center md:text-left">Buy cover with loan</Link> */}
                 </div>
             </div>
 
+            <div className="services lg:px-40 p-8 pb-24">
+                <div className="flex flex-col gap-y-8 lg:flex-row justify-between -mt-32">
+                    <div className="bg-white shadow-lg rounded-3xl text-center p-8 service-item">
+                        <img src={image1} alt="" className="inline mb-4" />
+                        <p className="font-bold text-2xl line leading-6">I don’t have</p>
+                        <p className="mb-3 font-bold text-2xl leading-6"> a health plan</p>
+                        <p className="font-medium text-xs">Click on the button below <br /> to get started</p>
+                        <Link to='/buy-cover' className="new-button2 w-32 mt-8 rounded-xl m-auto text-sm inline-block">Learn More</Link>
+                    </div>
+
+                    <div className="bg-white shadow-lg rounded-3xl text-center p-8 service-item">
+                        <img src={image2} alt="" className="inline mb-4" />
+                        <p className="font-bold text-2xl line leading-6">I already have</p>
+                        <p className="mb-3 font-bold text-2xl leading-6"> a health plan</p>
+                        <p className="font-medium text-xs">Go on and click the button <br /> below to renew your plan </p>
+                        <Link to='/buy-cover' className="new-button2 w-32 mt-8 rounded-xl m-auto text-sm inline-block">Learn More</Link>
+                    </div>
+
+                    <div className="bg-white shadow-lg rounded-3xl text-center p-8 service-item">
+                        <img src={image3} alt="" className="inline mb-4" />
+                        <p className="font-bold text-2xl line leading-6">I can't afford</p>
+                        <p className="mb-3 font-bold text-2xl leading-6"> a health plan</p>
+                        <p className="font-medium text-xs">Don’t worry much, just click <br /> on the button below, buy and paylater</p>
+                        <Link to='/buy-cover' className="new-button2 w-32 mt-8 rounded-xl m-auto text-sm inline-block">Learn More</Link>
+                    </div>
+                </div>
+            </div>
+
+            {/* Ready to talk */}
+            <ReadyTalk></ReadyTalk>
+
             {/* insurance info section */}
-            {/* <InsurancePackage></InsurancePackage> */}
+            <InsurancePackage></InsurancePackage>
 
             {/* Oyo insurance agency */}
-            {/* <OyoAgency></OyoAgency> */}
+            <OyoAgency></OyoAgency>
+
+            <div className="lg:px-40 px-8 bg-primary font-primary">
+                <div className="text-center">
+                    <div className="header pb-20">
+                        <p className="pt-9 font-extrabold text-3xl mb-1 text-white">Ready to Talk?</p>
+                        <p className="font-medium text-xs text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris</p>
+
+                        <button onClick={() => history.push('/contact')} className="contact-us-btn">Contact Us</button>
+
+                        <p className="text-xl font-medium contact-stats">More that 1.5 million individuals use NucleusIS</p>
+
+                    </div>
+                </div>
+            </div>
 
             {/* Customer Expectation */}
             {/* <CustomerExpectation></CustomerExpectation> */}
@@ -38,8 +88,6 @@ function Home() {
             {/* Testimonies */}
             {/* <Testimonials></Testimonials> */}
 
-            {/* Ready to talk */}
-            {/* <ReadyTalk></ReadyTalk> */}
         </div>
     )
 }

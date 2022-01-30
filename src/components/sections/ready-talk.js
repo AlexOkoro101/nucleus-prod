@@ -11,7 +11,7 @@ function ReadyTalk() {
 
     return (
         <>
-            <div className="lg:px-40 px-8 bg-primary font-primary">
+            {/* <div className="lg:px-40 px-8 bg-primary font-primary">
                 <div className="text-center">
                     <div className="header pb-20">
                         <p className="pt-9 font-extrabold text-3xl mb-1 text-white">Ready to Talk?</p>
@@ -23,9 +23,9 @@ function ReadyTalk() {
 
                     </div>
                 </div>
-            </div>
+            </div> */}
             <div className="lg:px-40 px-8 bg-white relative h-24 w-full">
-                <div className="absolute bg-white lg:px-10 px-2 py-4 flex justify-between clients">
+                <div className="absolute bg-white lg:px-10 px-2 py-8 flex justify-between clients">
                     <img src={client1} alt="client" />
                     <img src={client2} alt="client" />
                     <img src={client3} alt="client" />

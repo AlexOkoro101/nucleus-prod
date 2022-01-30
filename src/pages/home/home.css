@@ -1,11 +1,21 @@
 .home-banner {
-    background: url('../../assets/img/home-banner.png');
+    background: url('../../assets/img/back.svg');
     background-size: cover;
 }
 .buy-cover-button {
     background: #663391;
     border-radius: 30px; 
     padding: 11px 26px;   
+    color: #fff;
+}
+.new-button {
+    background: #663391;
+    padding: 11px 26px;   
+    color: #fff;
+}
+.new-button2 {
+    background: #663391;
+    padding: 12px 19px;   
     color: #fff;
 }
 .transparent-button {
@@ -187,6 +197,9 @@
     .slick-slider {
         margin-bottom: 70px;
     }
+    .service-item {
+        width: 100% !important;
+    }
 }
 
 .pin-field {
@@ -227,6 +240,13 @@
     to {
       transform: scale(1.05) translateY(5%);
     }
+  }
+
+  .service-item {
+      width: 30%;
+  }
+  .services {
+      background-color: #EFEAE6;
   }
 
   
