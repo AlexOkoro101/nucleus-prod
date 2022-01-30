@@ -27,13 +27,13 @@ function BuyCover() {
                     <p className="font-bold text-2xl mb-6">Private health <br /> Insurance Packages</p>
                     <p className="font-medium insurance-caption">Lorem ipsum dolor sit amet, <br /> consectetur adipiscing elit.</p>
                 </div>
-                <div className="flex justify-around lg:gap-x-20 gap-x-2 lg:px-80 px-8 lg:mb-44 mb-14">
+                <div className="flex flex-col lg:flex-row justify-around lg:gap-20 gap-10 lg:px-80 px-8 lg:mb-44 mb-14">
                     <div>
                         <img src={buycover1} alt="buycover"  className="inline-block w-auto lg:w-96" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Young Professional</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                         {type == 'loan' ? (
-                            <Link to='/buy-cover/individualLoan' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                            <Link to='/buy-cover/individual-loan' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
                         ) : (
                             <Link to='/buy-cover/individual' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
                         )}
@@ -42,21 +42,34 @@ function BuyCover() {
                         <img src={buycover2} alt="buycover" className="inline-block lg:w-96 w-auto" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Family</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <Link to='/buy-cover/family' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        
+                        {type == 'loan' ? (
+                            <Link to='/buy-cover/family-loan' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        ) : (
+                            <Link to='/buy-cover/family' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        )}
                     </div>
                 </div>
-                <div className="flex justify-around lg:gap-x-20 gap-x-2 lg:px-80 px-8 mb-14">
+                <div className="flex flex-col lg:flex-row justify-around lg:gap-20 gap-10 lg:px-80 px-8 mb-14">
                     <div>
                         <img src={buycover3} alt="buycover" className="inline-block lg:w-96 w-auto" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">SMEs</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <Link to='/buy-cover/sme' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        {type == 'loan' ? (
+                            <Link to='/buy-cover/sme-loan' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        ) : (
+                            <Link to='/buy-cover/sme' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        )}
                     </div>
                     <div>
                         <img src={buycover4} alt="buycover" className="inline-block lg:w-96 w-auto" />
                         <p className="mt-6 text-black font-bold text-2xl mb-6">Elderly</p>
                         <p className="color-secondary buycover-cap font-medium mb-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                        <Link to='/buy-cover/elderly' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        {type == 'loan' ? (
+                            <Link to='/buy-cover/elderly-loan' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        ) : (
+                            <Link to='/buy-cover/elderly' className="individual-btn mt-14 mb-14 uppercase">Get Started</Link>
+                        )}
                     </div>
                 </div>
             </div>

@@ -16,6 +16,11 @@ import Terms from "./pages/terms";
 import IndividualLoan from "./pages/plans/loan/individualLoan";
 import OTP from "./pages/plans/loan/otp";
 import { useEffect, useState } from "react";
+import Family from "./pages/plans/family";
+import Elderly from "./pages/plans/elderly";
+import ElderlyLoan from "./pages/plans/loan/elderlyLoan";
+import FamilyLoan from "./pages/plans/loan/familyLoan";
+import SMELoan from "./pages/plans/loan/smeLoan";
 
 function App() {
 
@@ -37,6 +42,12 @@ function App() {
             <Route path="/buy-cover/individual">
               <Individual></Individual>
             </Route>
+            <Route path="/buy-cover/family">
+              <Family></Family>
+            </Route>
+            <Route path="/buy-cover/elderly">
+              <Elderly></Elderly>
+            </Route>
             <Route path="/buy-cover/corporate">
               <Corporate></Corporate>
             </Route>
@@ -47,8 +58,17 @@ function App() {
               <RenewCover></RenewCover>
             </Route>
 
-            <Route path="/buy-cover/individualLoan">
+            <Route path="/buy-cover/individual-loan">
               <IndividualLoan></IndividualLoan>
+            </Route>
+            <Route path="/buy-cover/elderly-loan">
+              <ElderlyLoan></ElderlyLoan>
+            </Route>
+            <Route path="/buy-cover/family-loan">
+              <FamilyLoan></FamilyLoan>
+            </Route>
+            <Route path="/buy-cover/sme-loan">
+              <SMELoan></SMELoan>
             </Route>
 
             {/* Transaction */}

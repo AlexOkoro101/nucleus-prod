@@ -5,16 +5,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import Banner from '../shared/banner'
-import user from '../../../assets/img/vector.svg'
-import '../plans.css'
-import { enviroment } from '../../../components/shared/enviroment'
+import Banner from './shared/banner'
+import user from '../../assets/img/vector.svg'
+import './plans.css'
+import { enviroment } from '../../components/shared/enviroment'
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { useHistory } from 'react-router-dom';
 var Spinner = require('react-spinkit');
 
 
-function IndividualLoan() {
+function Family() {
     //Routing
     const history = useHistory();
     const { control, register, handleSubmit } = useForm();
@@ -40,9 +40,9 @@ function IndividualLoan() {
         });
 
     //Hooks
-    const [confrimDetail, setconfrimDetail] = useState(1)
+    const [confrimDetail, setconfrimDetail] = useState(false)
     const [planDetails, setplanDetails] = useState(null)
-    const [initialPageName, setinitialPageName] = useState("Individual Loan Plan")
+    const [initialPageName, setinitialPageName] = useState("Family Plan")
 
 
     const [isloading, setisloading] = useState(false)
@@ -51,13 +51,12 @@ function IndividualLoan() {
 
     //Form values
     const [imgData, setimgData] = useState('')
-    const [loanDuration, setloanDuration] = useState(1)
     const [fname, setfname] = useState("")
     const [lname, setlname] = useState("")
     const [mname, setmname] = useState("")
     const [email, setemail] = useState("")
     const [phone, setphone] = useState("")
-    const [gender, setgender] = useState("Male")
+    const [gender, setgender] = useState("")
     const [dob, setdob] = useState(new Date())
     const [address, setaddress] = useState("")
     const [hospital, sethospital] = useState("")
@@ -70,18 +69,7 @@ function IndividualLoan() {
     const [dependentArray, setdependentArray] = useState([])
     const [dependantExistingCondition, setdependantExistingCondition] = useState("false")
     const [dependantDob, setdependantDob] = useState(new Date())
-
-    //Card Details
-    const [cardNumber, setcardNumber] = useState("")
-    const [cardExpiry, setcardExpiry] = useState("")
-    const [cardCVV, setcardCVV] = useState("")
-    const [cardPIN, setcardPIN] = useState("")
-    const [cardFullname, setcardFullname] = useState("")
-    const [cardEmail, setcardEmail] = useState("")
-    const [cardPhone, setcardPhone] = useState("")
-
-    //window call back
-    const [openedWindow, setopenedWindow] = useState(null)
+    // console.log(new Date().toLocaleDateString())
     
 
 
@@ -92,28 +80,10 @@ function IndividualLoan() {
             getPlanDetails()
         }
     }, [])
-
-    useEffect(() => {
-        checkWindowClosed()
-        return () => {
-            checkWindowClosed()
-        }
-    }, [openedWindow?.closed])
     //End of Hooks
 
 
-
     //Functions
-    const checkWindowClosed = () => {
-        // console.log(openedWindow?.closed);
-        if(openedWindow?.closed == false) {
-            console.log("Running verify");
-            cardCollectionVerify()
-        }
-    }
-
-
-
     const chooseImage = () => {
         document.getElementById('photo').click();  
         
@@ -167,7 +137,7 @@ function IndividualLoan() {
         // setdependentArray(data.dependants.map())
 
         setinitialPageName("Confirm Details")
-        setconfrimDetail(2)
+        setconfrimDetail(true)
     
 
     }
@@ -198,6 +168,34 @@ function IndividualLoan() {
         });
     }
 
+    // const addDependants = () => {
+    //     setdependants([...dependants, dependatObj]);
+    //     console.log(dependants)
+    // }
+
+    // const removeDependant = (index) => {
+    //     console.log(index)
+    //     const newArray = dependants.filter((dependant, id) => {
+    //         return id !== index
+    //     })
+    //     setdependants(newArray)
+    // }
+
+    // const setFirstName = (e, id) => {
+    //     // console.log(e.target?.getAttribute("name"))
+    //     // // console.log(index)
+
+    //     // dependants[index].firstName.value = e.target.value
+    //     var obj = dependants.map((dependant, index) => {
+    //         if(index == id) {
+    //             dependant.firstName.value = e.target.value
+    //         }
+    //         return dependant;
+            
+    //     })
+    //     setdependants(obj)
+        
+    // }
 
     const buyPlan = () => {
         setisloadingPayment(true)
@@ -209,8 +207,6 @@ function IndividualLoan() {
 
         const obj = {
             plan: 7,
-            paymentType: "LOAN",
-            loanDuration: loanDuration,
             entity: {
                 "firstname": fname,
                 "lastname": lname,
@@ -254,51 +250,7 @@ function IndividualLoan() {
             setisloadingPayment(false)
             console.log(result)
             if(result.status) {
-                setconfrimDetail(3)
-                setinitialPageName("Card Details")
-                localStorage.setItem('orderRef', result.data.orderRef)
-            }
-
-        })
-        .catch(error => console.log('error', error));
-    }
-
-    const payWithCard = () => {
-        setisloadingPayment(true)
-
-        var myHeaders = new Headers();
-        myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
-        "cardNumber": cardNumber,
-        "cvv": cardCVV,
-        "expiry": cardExpiry,
-        "cardPin": cardPIN,
-        "phoneNumber": cardPhone,
-        "fullname": cardFullname,
-        "email": cardEmail
-        });
-
-        var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
-        };
-
-        fetch(enviroment.BASE_URL + "card/collection", requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            setisloadingPayment(false)
-            console.log(result)
-            if(result.status) {
-                if(result.data.meta.authorization.mode == "otp") {
-                    localStorage.setItem('transData', JSON.stringify(result.data))
-                    history.push('/validate')
-                } else {
-                    localStorage.setItem('transData', JSON.stringify(result.data))
-                    setopenedWindow(window.open(result.data.meta.authorization.redirect, "", "width=500, height=700"))
-                }
+                generateLink(result.data)
             }
 
         })
@@ -306,96 +258,33 @@ function IndividualLoan() {
     }
 
 
-    function formatString(event) {
-        var inputChar = String.fromCharCode(event.keyCode);
-        var code = event.keyCode;
-        var allowedKeys = [8];
-        if (allowedKeys.indexOf(code) !== -1) {
-          return;
-        }
-      
-        event.target.value = event.target.value.replace(
-          /^([1-9]\/|[2-9])$/g, '0$1/' // 3 > 03/
-        ).replace(
-          /^(0[1-9]|1[0-2])$/g, '$1/' // 11 > 11/
-        ).replace(
-          /^([0-1])([3-9])$/g, '0$1/$2' // 13 > 01/3
-        ).replace(
-          /^(0?[1-9]|1[0-2])([0-9]{2})$/g, '$1/$2' // 141 > 01/41
-        ).replace(
-          /^([0]+)\/|[0]+$/g, '0' // 0/ > 0 and 00 > 0
-        ).replace(
-          /[^\d\/]|^[\/]*$/g, '' // To allow only digits and `/`
-        ).replace(
-          /\/\//g, '/' // Prevent entering more than 1 `/`
-        );
-    }
-      
-    const cardCollectionVerify = () => {
-        const item = JSON.parse(localStorage.getItem('transData'))
-        const orderRef = localStorage.getItem('orderRef')
-        var requestOptions = {
-            method: 'GET',
-            redirect: 'follow'
-        };
-          
-        fetch(enviroment.BASE_URL + `card/collection/verify/${item?.data?.id}/${orderRef}`, requestOptions)
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-            if(result.status) {
-                verifyPlan(orderRef)
-            }
-        })
-        .catch(error => console.log('error', error));
-    }
-
-    const verifyPlan = (orderRef) => {
+    const generateLink = (data) => {
         var myHeaders = new Headers();
         myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "orderRef": orderRef
+            "orderReference": data.orderRef
         });
 
         var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
         };
 
-        fetch(enviroment.BASE_URL + "buy-plan/payment/loan", requestOptions)
+        fetch(enviroment.BASE_URL + "buy-plan/payment", requestOptions)
         .then(response => response.json())
         .then(result => {
             console.log(result)
-            setisloadingPayment(false)
             if(result.status) {
-                history.push('/payment/success')
-            } else {
-                history.push('/payment/failure')
+                window.location.assign(result.data.link)
             }
         })
         .catch(error => console.log('error', error));
     }
 
-    function numberFormat(){
-        const inputList = document.getElementById('card-number')
-        if(inputList.value.length < 19){
-            inputList.value = inputList.value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ');
-          return true;
-        }else{
-          return false;
-        }
-    }
-
-    function cc_format(value) {
-        value = value.replace(/[^\d ]/g,'')
-      
-        return false;
-    }
-    
     const populateAddress = () => {
         const datalist = document.getElementById('hospitals')
         const inputList = document.getElementById('hospital-list')
@@ -427,7 +316,7 @@ function IndividualLoan() {
             ) : (
                 <div className="lg:px-64 px-8 font-primary">
                     <div className="form">
-                        {confrimDetail == 1 && (
+                        {!confrimDetail ? (
                             <form onSubmit={handleSubmit(submitForm)}>
                                 <h1 className="header mb-3">Plan Details</h1>
                                 <div>
@@ -435,7 +324,6 @@ function IndividualLoan() {
                                         {planDetails?.plan.planName}
                                     </div>
                                 </div>
-
 
                                 <div className="mt-10 flex flex-col lg:flex-row gap-8">
                                     <div className="flex flex-row lg:flex-col gap-2">
@@ -471,6 +359,7 @@ function IndividualLoan() {
 
                                 </div>
 
+
                                 <h1 className="header mt-9 mb-10">Personal Details</h1>
 
                                 <div className="mb-10">
@@ -480,18 +369,6 @@ function IndividualLoan() {
                                         <img src={imgData ? imgData : user} alt="db" width="68px" height="68px"/>
                                         <p className="text-sm font-medium">Tap to upload image</p>
                                     </div>
-                                </div>
-                                
-
-                                <div className="mb-10">
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="first-name">Loan Duration</label>
-                                        <select value={loanDuration} onChange={(e) => setloanDuration(e.target.value)} className=" px-6 focus:outline-none lg:w-1/3 w-full">
-                                            <option value={1}>1 Months</option>
-                                            <option value={2}>2 Months</option>
-                                            <option value={3}>3 Months</option>
-                                        </select>
-                                    </div>  
                                 </div>
 
                                 <div className="flex flex-col gap-y-6 mb-10">
@@ -582,7 +459,7 @@ function IndividualLoan() {
                                     {
                                         (exisitingCondition == "true") && (
 
-                                            <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
+                                            <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3flex  lg:gap-x-3">
                                                 <div className="flex flex-col  lg:w-4/12">
                                                     <label htmlFor="condition-duration">Condition Duration</label>
                                                     <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} />
@@ -730,8 +607,7 @@ function IndividualLoan() {
                                 
                             </form>
 
-                        )} 
-                        {confrimDetail == 2 &&  (
+                        ) : (
                             <div className="confirm-cover-details">
                                 <div>
                                     <h1 className="header mb-3">Plan Details</h1>
@@ -757,8 +633,8 @@ function IndividualLoan() {
                                     <table className="table-fixed w-full md:hidden block">
                                         <tbody className="w-full table">
                                             <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">First Name</span>  <br /> <span className="text-black font-medium text-lg">{fname}</span>  </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{lname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">First Name</span>  <br /> <span className="text-black font-medium text-xl">{fname}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Last Name</span>  <br /> <span className="text-black font-medium text-2xl">{lname}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{mname}</span> </td>
@@ -769,14 +645,12 @@ function IndividualLoan() {
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob.toLocaleDateString()}</span> </td>
                                             </tr>
                                             <tr>
+
                                                 <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Email</span>  <br /> <span className="text-black font-medium text-lg">{email}</span> </td>
                                             </tr>
                                             <tr>
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{phone}</span> </td>
                                                 <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-lg text-base">Address</span>  <br /> <span className="text-black font-medium text-lg">{address}</span> </td>
-                                            </tr>
-                                            <tr>
-                                                <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">Loan Duration</span>  <br /> <span className="text-black font-medium text-lg">{loanDuration} Month(s)</span> </td>
                                             </tr>
                                             <tr className="bg-gray-300">
                                                 <td className="p-3 font-semibold text-lg" colSpan="3">Hospital Details</td>
@@ -794,29 +668,28 @@ function IndividualLoan() {
                                     <table className="table-fixed w-full hidden md:block">
                                         <tbody className="w-full table">
                                             <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">First Name</span>  <br /> <span className="text-black font-medium text-xl">{fname}</span>  </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Last Name</span>  <br /> <span className="text-black font-medium text-xl">{lname}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Middle Name</span>  <br /> <span className="text-black font-medium text-xl">{mname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-xl">{fname}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-xl">{lname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Middle Name</span>  <br /> <span className="text-black font-medium text-xl">{mname}</span> </td>
                                             </tr>
                                             <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Gender</span>  <br /> <span className="text-black font-medium text-xl">{gender}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">D.O.B</span>  <br /> <span className="text-black font-medium text-xl">{dob.toLocaleDateString()}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Email</span>  <br /> <span className="text-black font-medium text-xl">{email}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-xl">{gender}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-xl">{dob.toLocaleDateString()}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-xl">{email}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Phone Number</span>  <br /> <span className="text-black font-medium text-xl">{phone}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Address</span>  <br /> <span className="text-black font-medium text-xl">{address}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Loan Duration</span>  <br /> <span className="text-black font-medium text-xl">{loanDuration} Month(s)</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-xl">{phone}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-xl">{address}</span> </td>
                                             </tr>
                                             <tr className="bg-gray-300">
                                                 <td className="p-3 font-semibold text-lg" colSpan="3">Hospital Details</td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-base">Location</span>  <br /> <span className="text-black font-medium text-xl">{hospitalAddress}</span> </td>
-                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-base">Hospital</span>  <br /> <span className="text-black font-medium text-xl">{hospital}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-sm">Location</span>  <br /> <span className="text-black font-medium text-xl">{hospitalAddress}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Hospital</span>  <br /> <span className="text-black font-medium text-xl">{hospital}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-base">Price</span>  <br /> <span className="text-black font-medium text-xl">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Price</span>  <br /> <span className="text-black font-medium text-xl">N{planDetails?.plan.planAmount.amount}</span> </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -834,62 +707,6 @@ function IndividualLoan() {
                             </div>
                         )}
 
-                        {confrimDetail == 3 && (
-                            <form className="lg:px-20 px-0" onSubmit={handleSubmit(submitForm)}>
-                                <h1 className="header mb-3">Card Details</h1>
-
-                                <div className="flex flex-col lg:flex-row justify-between lg:gap-x-3 lg:gap-y-0 gap-y-3 mb-10">
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="gender">Card Number</label>
-                                        <input value={cardNumber} onChange={(e) => setcardNumber(e.target.value)} onKeyPress={(e) => numberFormat()} onKeyUp={(e) => cc_format(e.target.value)} className="input-primary px-6 focus:outline-none" type="tel" id="card-number" maxLength="19"  />
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col lg:flex-row lg:gap-x-3 lg:gap-y-0 justify-between gap-y-3 mb-10">
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="phone">Expiry</label>
-                                        <input maxLength='5' value={cardExpiry} onChange={(e) => setcardExpiry(e.target.value)} onKeyUp={(e) => formatString(e)}  className="input-primary px-6 focus:outline-none" type="tel" />
-                                    </div>
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="address">CVV</label>
-                                        <input maxLength="3" value={cardCVV} onChange={(e) => setcardCVV(e.target.value)}  className="input-primary px-6 focus:outline-none" type="tel"  />
-                                    </div>
-
-                                    <div className="flex flex-col flex-1">
-                                        <label htmlFor="middle-name">Card PIN</label>
-                                        <input maxLength="4" value={cardPIN} onChange={(e) => setcardPIN(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text"/>
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col gap-y-6 mb-10">
-                                    <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="first-name">Full Name</label>
-                                            <input value={cardFullname} onChange={(e) => setcardFullname(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" />
-                                        </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="last-name">Email</label>
-                                            <input value={cardEmail} onChange={(e) => setcardEmail(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text" />
-                                        </div>
-                                        <div className="flex flex-col flex-1">
-                                            <label htmlFor="middle-name">Phone Number</label>
-                                            <input value={cardPhone} onChange={(e) => setcardPhone(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text" />
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div>
-                                    <button 
-                                    onClick={() => {
-                                    payWithCard()
-                                    
-                                    }}
-                                        type="button" className="individual-btn mb-14 uppercase">{isloadingPayment ? (<Spinner name="circle" color='#fff' fadeIn='none' />) : ("Proceed")}</button>
-                                </div>
-                            </form>
-                        )}
-
                     </div>
                 </div>
 
@@ -899,4 +716,4 @@ function IndividualLoan() {
     )
 }
 
-export default IndividualLoan
+export default Family

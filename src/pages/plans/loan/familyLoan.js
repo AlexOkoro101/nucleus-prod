@@ -14,7 +14,7 @@ import { useHistory } from 'react-router-dom';
 var Spinner = require('react-spinkit');
 
 
-function IndividualLoan() {
+function FamilyLoan() {
     //Routing
     const history = useHistory();
     const { control, register, handleSubmit } = useForm();
@@ -42,7 +42,7 @@ function IndividualLoan() {
     //Hooks
     const [confrimDetail, setconfrimDetail] = useState(1)
     const [planDetails, setplanDetails] = useState(null)
-    const [initialPageName, setinitialPageName] = useState("Individual Loan Plan")
+    const [initialPageName, setinitialPageName] = useState("Family Loan Plan")
 
 
     const [isloading, setisloading] = useState(false)
@@ -899,4 +899,4 @@ function IndividualLoan() {
     )
 }
 
-export default IndividualLoan
+export default FamilyLoan
