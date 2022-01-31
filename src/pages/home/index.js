@@ -16,8 +16,8 @@ function Home() {
 
     return (
         <div className="home font-primary">
-            <div className="home-banner h-screen">
-                <div className="banner-content h-full flex flex-col justify-center lg:px-64 lg:py-40 px-8 py-8 text-center">
+            <div className="home-banner">
+                <div className="banner-content flex flex-col justify-center lg:px-64 md:pt-40 md:pb-40 px-8 pt-20 pb-32 sm:pt-20 sm:pb-40 text-center">
                     <h1 className="text-white lg:text-4xl text-2xl font-extrabold">Have access and buy health plans  </h1>
                     <h1 className="text-white lg:text-4xl text-2xl font-extrabold mb-16">from Top HMOs in <span style={{color: "#ffea2f"}}>One Place</span></h1>
                     <Link to='/buy-cover' className="new-button w-40 mx-auto rounded-xl inline-block">Learn More</Link>
@@ -31,8 +31,8 @@ function Home() {
                 </div>
             </div>
 
-            <div className="services lg:px-40 p-8 pb-24">
-                <div className="flex flex-col gap-y-8 lg:flex-row justify-between -mt-32">
+            <div className="services lg:px-40 md:px-20 p-8 pb-24">
+                <div className="flex flex-col gap-y-8 sm:flex-row justify-between -mt-32">
                     <div className="bg-white shadow-lg rounded-3xl text-center p-8 service-item">
                         <img src={image1} alt="" className="inline mb-4" />
                         <p className="font-bold text-2xl line leading-6">I don’t have</p>

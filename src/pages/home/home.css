@@ -159,6 +159,17 @@
     width: 76.3%;
     top: -2rem;
 }
+@media (max-width: 1024px) {
+    .service-item {
+        width: 30% !important;
+    }
+}
+
+@media (max-width: 630px) {
+    .service-item {
+        width: 100% !important;
+    }
+}
 
 @media (max-width: 550px) {
     .counter {
