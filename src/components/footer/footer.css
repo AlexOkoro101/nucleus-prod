@@ -9,7 +9,7 @@
 }
 
 .text-color {
-    color: #6084A4;
+    color: #000;
 }
 .footer ul li , .footer ul li a {
     color: #6084A4;
@@ -23,7 +23,7 @@
 .copyright {
     font-weight: 500;
     font-size: 14px; 
-    color: #6084A4;  
+    color: #000;  
 }
 .copyright span {
     font-weight: 800;

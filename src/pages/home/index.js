@@ -60,7 +60,7 @@ function Home() {
             </div>
 
             {/* Ready to talk */}
-            <ReadyTalk></ReadyTalk>
+            {/* <ReadyTalk></ReadyTalk> */}
 
             {/* insurance info section */}
             <InsurancePackage></InsurancePackage>
@@ -70,9 +70,9 @@ function Home() {
 
             <div className="lg:px-40 px-8 bg-primary font-primary">
                 <div className="text-center">
-                    <div className="header pb-20">
+                    <div className="header pt-20 pb-20">
                         <p className="pt-9 font-extrabold text-3xl mb-1 text-white">Ready to Talk?</p>
-                        <p className="font-medium text-xs text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris</p>
+                        {/* <p className="font-medium text-xs text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris</p> */}
 
                         <button onClick={() => history.push('/contact')} className="contact-us-btn">Contact Us</button>
 

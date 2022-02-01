@@ -17,6 +17,7 @@
     background: #663391;
     padding: 12px 19px;   
     color: #fff;
+    font-weight: 500;
 }
 .transparent-button {
     border: 2.5px solid #fff;
@@ -32,7 +33,7 @@
     padding: 14px 45px;
 }
 .insurance-caption {
-    font-size: 11px;
+    font-size: 13px;
     color: #6084A4;
 }
 .expectation-caption {
