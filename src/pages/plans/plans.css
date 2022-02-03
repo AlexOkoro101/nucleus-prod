@@ -26,8 +26,8 @@
 }
 .input-primary {
     background: #E5E5E5;
-    border-radius: 30px;
-    height: 64px;
+    border-radius: 6px;
+    height: 49px;
     font-weight: 500;
     font-size: 14px;
     color: #000000;
@@ -119,8 +119,8 @@
 }
 .entity-dob {
     background: #E5E5E5;
-    border-radius: 30px;
-    height: 64px;
+    border-radius: 6px;
+    height: 49px;
     font-weight: 500;
     font-size: 14px;
     color: #000000;
@@ -131,21 +131,21 @@
 
 select {
     background-color: #E5E5E5;
-    border-radius: 30px;
-    height: 64px;
+    border-radius: 6px;
+    height: 49px;
     font-weight: 500;
     font-size: 14px;
     color: #000000;
-
+    
 
     background-image:
       linear-gradient(45deg, transparent 50%, gray 50%),
       linear-gradient(135deg, gray 50%, transparent 50%),
       linear-gradient(to right, #ccc, #ccc);
     background-position:
-      calc(100% - 20px) calc(2em + 2px),
-      calc(100% - 15px) calc(2em + 2px),
-      calc(100% - 2.5em) 1.5em;
+      calc(100% - 20px) calc(1.5em + 2px),
+      calc(100% - 15px) calc(1.5em + 2px),
+      calc(100% - 2.5em) 1em;
     background-size:
       5px 5px,
       5px 5px,
@@ -166,9 +166,9 @@ select {
       linear-gradient(135deg, transparent 50%, gray 50%),
       linear-gradient(to right, #ccc, #ccc);
     background-position:
-      calc(100% - 15px) 2em,
-      calc(100% - 20px) 2em,
-      calc(100% - 2.5em) 1.5em;
+      calc(100% - 15px) 1.5em,
+      calc(100% - 20px) 1.5em,
+      calc(100% - 2.5em) 1em;
     background-size:
       5px 5px,
       5px 5px,
@@ -176,4 +176,12 @@ select {
     background-repeat: no-repeat;
     border-color: green;
     outline: 0;
+  }
+  .userdp {
+      margin-top: -175px;
+  }
+  @media (max-width: 550px) {
+    .userdp {
+        margin-top: -135px;
+    }
   }

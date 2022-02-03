@@ -139,7 +139,7 @@ function RenewCover() {
             <ToastContainer />
             <Banner bannerHeader="Renew Cover"></Banner>
 
-            <div className="lg:px-80 px-8 font-primary mb-40">
+            <div className="lg:px-80 px-8 mt-28  font-primary mb-40">
                 {!showCustomer ? (
                     <div className="form text-center lg:px-5 px-0">
                         <div className="tabs">

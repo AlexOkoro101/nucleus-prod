@@ -425,7 +425,7 @@ function IndividualLoan() {
 
                 </div>
             ) : (
-                <div className="lg:px-64 px-8 font-primary">
+                <div className="lg:px-64 px-8 mt-28  font-primary">
                     <div className="form">
                         {confrimDetail == 1 && (
                             <form onSubmit={handleSubmit(submitForm)}>

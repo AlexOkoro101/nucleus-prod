@@ -49,8 +49,11 @@ function Individual() {
     const [isloadingPayment, setisloadingPayment] = useState(false)
     const [error, seterror] = useState(null)
 
+    const [hospitalArray, sethospitalArray] = useState([])
+
+
     //Form values
-    const [imgData, setimgData] = useState('')
+    const [imgData, setimgData] = useState(null)
     const [fname, setfname] = useState("")
     const [lname, setlname] = useState("")
     const [mname, setmname] = useState("")
@@ -63,12 +66,13 @@ function Individual() {
     const [hospitalAddress, sethospitalAddress] = useState("")
     const [exisitingCondition, setexisitingCondition] = useState("false")
     const [healthCondition, sethealthCondition] = useState("")
-    const [conditionDuration, setconditionDuration] = useState("")
+    const [conditionDuration, setconditionDuration] = useState(new Date())
     const [conditionMedication, setconditionMedication] = useState("")
 
     const [dependentArray, setdependentArray] = useState([])
     const [dependantExistingCondition, setdependantExistingCondition] = useState("false")
     const [dependantDob, setdependantDob] = useState(new Date())
+    const [dependantConditionDuration, setdependantConditionDuration] = useState(new Date())
     // console.log(new Date().toLocaleDateString())
     
 
@@ -114,6 +118,10 @@ function Individual() {
 
 
     const submitForm = (data) => {
+        if(!imgData) {
+            toast.error("Image is missing")
+            return
+        }
         // e.preventDefault()
         console.log(data?.dependants)
         console.log(control)
@@ -129,7 +137,7 @@ function Individual() {
             dependantExistingConditions: person.existingCondition,
             dependantCondition: {
                 healthCondition: person.healthCondition,
-                healthConditionDuration: person.conditionDuration,
+                healthConditionDuration: person.dependantConditionDuration.toLocaleDateString(),
                 healthConditionMedication: person.conditionMedication
             }
 
@@ -215,7 +223,7 @@ function Individual() {
                 "gender": gender,
                 "dob": dob,
                 "address": address,
-                "hospital": hospital,
+                "hospital": `${hospital} - ${hospitalAddress}`,
                 "photo": `${imgData}`,
                 "agreement": true,
                 "existingConditions": exisitingCondition,
@@ -286,18 +294,28 @@ function Individual() {
     }
 
     const populateAddress = () => {
-        const datalist = document.getElementById('hospitals')
-        const inputList = document.getElementById('hospital-list')
+        const datalist = document.getElementById('hospital')
+        const inputList = document.getElementById('hospital-name')
         let step;
     
         for (var i=0;i<datalist.options.length;i++) {
           if (datalist.options[i].value == inputList.value) {
               console.log(datalist.options[i]);
               step = i;
-              sethospitalAddress(planDetails.providers[step].address)
+            //   console.log(i);
+              sethospitalAddress(hospitalArray[step].address)
               break;
           }
         }
+    }
+
+    const sethospitalDetail = (val) => {
+        // console.log(val);
+        const newArray = planDetails.providers.filter((provider) => {
+            return provider.location == val
+        })
+        // console.log(newArray);
+        sethospitalArray(newArray);
     }
 
 
@@ -314,10 +332,10 @@ function Individual() {
 
                 </div>
             ) : (
-                <div className="lg:px-64 px-8 font-primary">
+                <div className="">
                     <div className="form">
                         {!confrimDetail ? (
-                            <form onSubmit={handleSubmit(submitForm)}>
+                            <form onSubmit={handleSubmit(submitForm)} className="lg:px-64 px-8 pt-28 font-primary">
                                 <h1 className="header mb-3">Plan Details</h1>
                                 <div>
                                     <div className="flex input-primary w-full px-6 outline-none focus:outline-none items-center">
@@ -325,7 +343,7 @@ function Individual() {
                                     </div>
                                 </div>
 
-                                <div className="mt-10 flex flex-col lg:flex-row gap-8">
+                                <div className="mt-20 flex flex-col lg:flex-row gap-8 overflow-hidden">
                                     <div className="flex flex-row lg:flex-col gap-2">
                                         <div className="plan-price-box flex flex-col justify-center">
                                             <p className="text-sm text-white font-medium">Price</p>
@@ -337,12 +355,12 @@ function Individual() {
                                             <p className="text-lg font-medium text-white">{planDetails?.plan.planTenure}</p>
                                         </div>
                                     </div>
-                                    <div className="md:max-w-none bg-white px-8 md:px-10 py-8 md:py-10 mb-3 mx-0 md:-mx-3 md:mb-0 rounded-md shadow-lg shadow-gray-600 md:relative md:flex md:flex-col">
+                                    <div className="md:max-w-none bg-white px-8 md:px-5 py-8 md:py-0 mb-3 mx-0 md:-mx-3 md:mb-0 md:relative md:flex md:flex-col lg:border-l lg:h-32 lg:border-t-0 border-t">
                                         <div className="w-full flex-grow">
                                             <h2 className="font-bold uppercase mb-4">Plan Benefits</h2>
                                             {/* <h3 className="text-center font-bold text-4xl md:text-5xl mb-4">N19,900<span className="text-lg">/yr</span></h3> */}
                                             
-                                            <ul className="text-sm mb-8 plan-detail flex flex-wrap gap-x-4">
+                                            <ul className="text-xs mb-8 plan-detail flex flex-wrap gap-x-4">
                                                 <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.general_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.general_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>General Consultation</span> </li>
                                                 <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.glasses ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.glasses ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Glasses Specialist</span> </li>
                                                 <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.specialist_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.specialist_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Consultation</span> </li>
@@ -365,14 +383,14 @@ function Individual() {
                                 <div className="mb-10">
                                     <label htmlFor="photo"></label>
                                     <input className="input-primary px-6" type="file" onChange={() => encodeImageFileAsURL()} name="photo" id="photo" className="hidden" />
-                                    <div className="flex gap-x-2 lg:w-2/6 w-4/6 cursor-pointer items-center" onClick={() => {chooseImage()}}>
+                                    <div className="flex gap-x-2 lg:w-2/6 w-full cursor-pointer items-center" onClick={() => {chooseImage()}}>
                                         <img src={imgData ? imgData : user} alt="db" width="68px" height="68px"/>
                                         <p className="text-sm font-medium">Tap to upload image</p>
                                     </div>
                                 </div>
 
                                 <div className="flex flex-col gap-y-6 mb-10">
-                                    <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
+                                    <div className="flex w-full flex-wrap justify-between lg:gap-x-6 gap-y-3 lg:gap-y-0">
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="first-name">First Name</label>
                                             <input value={fname} onChange={(e) => setfname(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="first-name" id="first-name" />
@@ -387,10 +405,11 @@ function Individual() {
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col lg:flex-row justify-between lg:gap-x-3 lg:gap-y-0 gap-y-3">
+                                    <div className="flex flex-col lg:flex-row justify-between lg:gap-x-6 lg:gap-y-0 gap-y-3">
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="gender">Gender</label>
                                             <select name="gender" id="gender" className="px-6 focus:outline-none" value={gender} onChange={(e) => setgender(e.target.value)}>
+                                                <option>Select Gender</option>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
                                             </select>
@@ -406,7 +425,7 @@ function Individual() {
                                         </div>
                                     </div>
 
-                                    <div className="flex flex-col lg:flex-row lg:gap-x-3 lg:gap-y-0 justify-between gap-y-3">
+                                    <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-6">
                                         <div className="flex flex-col lg:w-4/12 ">
                                             <label htmlFor="phone">Phone Number</label>
                                             <input value={phone} onChange={(e) => setphone(e.target.value)}  className="input-primary px-6 focus:outline-none" type="tel" name="phone" id="phone" />
@@ -419,30 +438,50 @@ function Individual() {
 
                                     <h1 className="header">Hospital Details</h1>
 
-                                    <div className="flex justify-between gap-x-3">
-                                        <div className="flex flex-col w-4/12">
-                                            <label htmlFor="location">Name</label>
-                                            <input value={hospital} onChange={(e) => sethospital(e.target.value)} onBlur={populateAddress} className="input-primary px-6 focus:outline-none" type="text" list="hospitals" name="location" id="hospital-list" />
+                                    <div className="flex w-full flex-wrap justify-between lg:gap-x-6 gap-y-3 lg:gap-y-0">
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="location">Location</label>
+                                            <select name="state" id="state" className="px-6 focus:outline-none" onChange={(e) => sethospitalDetail(e.target.value)}>
+                                                <option>Select Location</option>
+                                                {planDetails?.locations.map((state, index) => (
+                                                    <option key={index} value={state.location}>{state.location}</option>
+                                                ))}
+                                            </select>
+                                            {/* <input value={hospital} onChange={(e) => sethospital(e.target.value)} onBlur={populateAddress} className="input-primary px-6 focus:outline-none" type="text" list="hospitals" name="location" id="hospital-list" />
                                             <datalist id="hospitals">
                                                 {planDetails?.providers.map((hospital, index) => (
+                                                    <option key={index} value={hospital.name}>{hospital.name}</option>
+                                                ))}
+                                            </datalist> */}
+                                        </div>
+                                        <div className="flex flex-col flex-1">
+                                            <label htmlFor="hospital">Name</label>
+                                            <input value={hospital} onChange={(e) => sethospital(e.target.value)}  onBlur={populateAddress} className="input-primary px-6 focus:outline-none" type="text" name="hospital-name" id="hospital-name" list="hospital" />
+                                            <datalist id="hospital">
+                                                {hospitalArray.map((hospital, index) => (
                                                     <option key={index} value={hospital.name}>{hospital.name}</option>
                                                 ))}
                                             </datalist>
                                         </div>
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="hospital">Address</label>
-                                            <input value={hospitalAddress} onChange={(e) => sethospitalAddress(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="hospital" id="hospital" />
+                                            <input value={hospitalAddress} onChange={(e) => sethospitalAddress(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text" list="hospitalAddress" name="hospitalAddress" id="hospitalAddress-list" />
+                                            <datalist id="hospitalAddress">
+                                                {hospitalArray.map((hospital, index) => (
+                                                    <option key={index} value={hospital.address}>{hospital.address}</option>
+                                                ))}
+                                            </datalist>
                                         </div>
                                     </div>
 
                                     <h1 className="header">Condition </h1>
 
-                                    <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
+                                    <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-6">
                                         <div className="flex flex-col  lg:w-4/12">
                                             <label htmlFor="exisiting-condition">Existing Condition</label>
                                             <select name="exisiting-condition" id="exisiting-condition" className="px-6 focus:outline-none" value={exisitingCondition} onChange={(e) => setexisitingCondition(e.target.value)}>
-                                                <option value="true">True</option>
-                                                <option value="false">False</option>
+                                                <option value="true">Yes</option>
+                                                <option value="false">No</option>
                                             </select>
                                         </div>
                                         {
@@ -459,14 +498,14 @@ function Individual() {
                                     {
                                         (exisitingCondition == "true") && (
 
-                                            <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3flex  lg:gap-x-3">
+                                            <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-6">
                                                 <div className="flex flex-col  lg:w-4/12">
-                                                    <label htmlFor="condition-duration">Condition Duration</label>
-                                                    <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} />
-                                                        
+                                                    <label htmlFor="condition-duration">Date of Diagnosis</label>
+                                                    {/* <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} /> */}
+                                                    <DatePicker selected={conditionDuration} onChange={(date) => setconditionDuration(date)} className="entity-dob" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
-                                                    <label htmlFor="condition-medication">Condition Medication</label>
+                                                    <label htmlFor="condition-medication">Current Medication</label>
                                                     <input value={conditionMedication} onChange={(e) => setconditionMedication(e.target.value)}   className="input-primary px-6 focus:outline-none" type="text" name="condition-medication" id="condition-medication" />
                                                 </div>
                                             </div>
@@ -489,22 +528,23 @@ function Individual() {
                                             <div className="flex w-full flex-wrap justify-between lg:gap-x-3 gap-y-3 lg:gap-y-0">
                                                 <div className="flex flex-col flex-1">
                                                     <label>First Name</label>
-                                                    <input {...register(`dependants.${index}.dependantFirstName`)} control={control} className="input-primary px-6 focus:outline-none" type="text"  />
+                                                    <input defaultValue={fname} {...register(`dependants.${index}.dependantFirstName`)} control={control} className="input-primary px-6 focus:outline-none" type="text"  />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Last Name</label>
-                                                    <input {...register(`dependants.${index}.dependantLastName`)} className="input-primary px-6 focus:outline-none" type="text" />
+                                                    <input defaultValue={lname} {...register(`dependants.${index}.dependantLastName`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Middle Name</label>
-                                                    <input  {...register(`dependants.${index}.dependantMiddleName`)} className="input-primary px-6 focus:outline-none" type="text"  />
+                                                    <input defaultValue={mname}  {...register(`dependants.${index}.dependantMiddleName`)} className="input-primary px-6 focus:outline-none" type="text"  />
                                                 </div>
                                             </div>
 
                                             <div className="flex flex-col lg:flex-row justify-between lg:gap-x-3 lg:gap-y-0 gap-y-3">
                                                 <div className="flex flex-col flex-1">
                                                     <label>Gender</label>
-                                                    <select {...register(`dependants.${index}.dependantGender`)} className="px-6 focus:outline-none" >
+                                                    <select defaultValue={gender} {...register(`dependants.${index}.dependantGender`)} className="px-6 focus:outline-none" >
+                                                        <option>Select Gender</option>
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                     </select>
@@ -512,22 +552,22 @@ function Individual() {
                                                 <div className="flex flex-col flex-1">
                                                     <label>D.O.B</label>
                                                     {/* <input {...register(`dependants.${index}.dependantDob`)} className="input-primary px-6 focus:outline-none" type="text" /> */}
-                                                    <DatePicker {...register(`dependants.${index}.dependantDob`, {value: dependantDob, onChange: (date) => setdependantDob(date)})} selected={dependantDob} onChange={(date) => setdependantDob(date)} className="entity-dob" />
+                                                    <DatePicker {...register(`dependants.${index}.dependantDob`, {value: dob, onChange: (date) => setdependantDob(date)})} selected={dependantDob} onChange={(date) => setdependantDob(date)} className="entity-dob" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Email</label>
-                                                    <input {...register(`dependants.${index}.dependantEmail`)} className="input-primary px-6 focus:outline-none" type="email" />
+                                                    <input defaultValue={email} {...register(`dependants.${index}.dependantEmail`)} className="input-primary px-6 focus:outline-none" type="email" />
                                                 </div>
                                             </div>
 
                                             <div className="flex flex-col lg:flex-row lg:gap-x-3 lg:gap-y-0 justify-between gap-y-3">
                                                 <div className="flex flex-col lg:w-4/12">
                                                     <label>Phone Number</label>
-                                                    <input {...register(`dependants.${index}.dependantPhoneNumber`)} className="input-primary px-6 focus:outline-none" type="tel" />
+                                                    <input defaultValue={phone} {...register(`dependants.${index}.dependantPhoneNumber`)} className="input-primary px-6 focus:outline-none" type="tel" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Address</label>
-                                                    <input {...register(`dependants.${index}.dependantAddress`)} className="input-primary px-6 focus:outline-none" type="text" />
+                                                    <input defaultValue={address}  {...register(`dependants.${index}.dependantAddress`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                             </div>
 
@@ -536,11 +576,11 @@ function Individual() {
                                             <div className="flex justify-between gap-x-3">
                                                 <div className="flex flex-col w-4/12">
                                                     <label>Name</label>
-                                                    <input {...register(`dependants.${index}.dependantHospital`)} className="input-primary px-6 focus:outline-none" type="text" />
+                                                    <input defaultValue={hospital} {...register(`dependants.${index}.dependantHospital`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Address</label>
-                                                    <input {...register(`dependants.${index}.dependantHospitalAddress`)} className="input-primary px-6 focus:outline-none" type="text" />
+                                                    <input defaultValue={hospitalAddress} {...register(`dependants.${index}.dependantHospitalAddress`)} className="input-primary px-6 focus:outline-none" type="text" />
                                                 </div>
                                             </div>
 
@@ -557,8 +597,8 @@ function Individual() {
                                                         value: dependantExistingCondition,
                                                         onChange: (e) => setdependantExistingCondition(e.target.value)
                                                     })}>
-                                                        <option value="true">True</option>
-                                                        <option value="false">False</option>
+                                                        <option value="true">Yes</option>
+                                                        <option value="false">No</option>
                                                     </select>
                                                 </div>
                                                 {dependantExistingCondition == "true" && (
@@ -574,12 +614,12 @@ function Individual() {
 
                                                 <div className="flex flex-col lg:flex-row lg:gap-y-0 gap-y-3 justify-between lg:gap-x-3">
                                                     <div className="flex flex-col  lg:w-4/12">
-                                                        <label htmlFor="condition-duration">Condition Duration</label>
-                                                        <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.conditionDuration`)} />
-                                                            
+                                                        <label htmlFor="condition-duration">Date of Diagnosis</label>
+                                                        {/* <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.conditionDuration`)} /> */}
+                                                        <DatePicker {...register(`dependants.${index}.dependantConditionDuration`, {value: dependantConditionDuration, onChange: (date) => setdependantConditionDuration(date)})} selected={dependantConditionDuration} onChange={(date) => setdependantConditionDuration(date)} className="entity-dob" />
                                                     </div>
                                                     <div className="flex flex-col flex-1">
-                                                        <label htmlFor="condition-medication">Condition Medication</label>
+                                                        <label htmlFor="condition-medication">Current Medication</label>
                                                         <input  className="input-primary px-6 focus:outline-none" name="condition-medication" id="condition-medication" {...register(`dependants.${index}.conditionMedication`)}  />
                                                     </div>
                                                 </div>
@@ -608,29 +648,22 @@ function Individual() {
                             </form>
 
                         ) : (
-                            <div className="confirm-cover-details">
+                            <div className="confirm-cover-details lg:px-64 px-8 pt-28 bg-gray-100 font-primary">
                                 <div>
-                                    <h1 className="header mb-3">Plan Details</h1>
-                                    <div>
-                                        <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
-                                    </div>
-
-                                    <h1 className="header mt-9 mb-10">Personal Details</h1>
-
-                                    <div className="mb-10">
-                                        <label htmlFor="photo"></label>
-                                        <div className="flex gap-x-2 w-2/6 cursor-pointer items-center">
-                                            <div className="overflow-hidden w-40 h-40 rounded-full border text-center">
-                                                {imgData ? (
-                                                <img src={imgData} alt="db" className="w-full h-full object-cover" />
-                                                ) : (
-                                                    <p className="mt-12">No Image</p>
-                                                )}
-                                            </div>
+                                    <div className="mb-32 text-center">
+                                        <div className="userdp overflow-hidden w-48 h-48 rounded-full bg-white border text-center inline-block">
+                                            {imgData ? (
+                                            <img src={imgData} alt="db" className="w-full h-full object-cover" />
+                                            ) : (
+                                                <p className="mt-16">No Image</p>
+                                            )}
+                                        </div>
+                                        <div>
+                                            <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
                                         </div>
                                     </div>
 
-                                    <table className="table-fixed w-full md:hidden block">
+                                    <table className="table-fixed w-full md:hidden block bg-white">
                                         <tbody className="w-full table">
                                             <tr className="">
                                                 <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-base">First Name</span>  <br /> <span className="text-black font-medium text-xl">{fname}</span>  </td>
@@ -665,31 +698,31 @@ function Individual() {
                                         </tbody>
                                     </table>
 
-                                    <table className="table-fixed w-full hidden md:block">
+                                    <table className="table-fixed w-full hidden md:block bg-white">
                                         <tbody className="w-full table">
                                             <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-xl">{fname}</span>  </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-xl">{lname}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Middle Name</span>  <br /> <span className="text-black font-medium text-xl">{mname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-lg">{fname}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{lname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{mname}</span> </td>
                                             </tr>
                                             <tr className="">
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-xl">{gender}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-xl">{dob.toLocaleDateString()}</span> </td>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-xl">{email}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-lg">{gender}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dob.toLocaleDateString()}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-lg">{email}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-xl">{phone}</span> </td>
-                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-xl">{address}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{phone}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-lg">{address}</span> </td>
                                             </tr>
                                             <tr className="bg-gray-300">
                                                 <td className="p-3 font-semibold text-lg" colSpan="3">Hospital Details</td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-sm">Location</span>  <br /> <span className="text-black font-medium text-xl">{hospitalAddress}</span> </td>
-                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Hospital</span>  <br /> <span className="text-black font-medium text-xl">{hospital}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-sm">Location</span>  <br /> <span className="text-black font-medium text-lg">{hospitalAddress}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{hospital}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Price</span>  <br /> <span className="text-black font-medium text-xl">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
                                             </tr>
                                         </tbody>
                                     </table>

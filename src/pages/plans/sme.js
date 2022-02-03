@@ -210,7 +210,7 @@ function SME() {
 
                 </div>
             ) : (
-            <div className="lg:px-64 px-8 font-primary">
+            <div className="lg:px-64 px-8 mt-28  font-primary">
                 <div className="form">
                 {!confrimDetail ? (
                     <form onSubmit={handleSubmit(submitForm)}>

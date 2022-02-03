@@ -314,7 +314,7 @@ function Family() {
 
                 </div>
             ) : (
-                <div className="lg:px-64 px-8 font-primary">
+                <div className="lg:px-64 px-8 mt-28  font-primary">
                     <div className="form">
                         {!confrimDetail ? (
                             <form onSubmit={handleSubmit(submitForm)}>
@@ -325,7 +325,7 @@ function Family() {
                                     </div>
                                 </div>
 
-                                <div className="mt-10 flex flex-col lg:flex-row gap-8">
+                                <div className="mt-20 flex flex-col lg:flex-row gap-8">
                                     <div className="flex flex-row lg:flex-col gap-2">
                                         <div className="plan-price-box flex flex-col justify-center">
                                             <p className="text-sm text-white font-medium">Price</p>
