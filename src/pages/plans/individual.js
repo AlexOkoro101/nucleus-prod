@@ -447,12 +447,6 @@ function Individual() {
                                                     <option key={index} value={state.location}>{state.location}</option>
                                                 ))}
                                             </select>
-                                            {/* <input value={hospital} onChange={(e) => sethospital(e.target.value)} onBlur={populateAddress} className="input-primary px-6 focus:outline-none" type="text" list="hospitals" name="location" id="hospital-list" />
-                                            <datalist id="hospitals">
-                                                {planDetails?.providers.map((hospital, index) => (
-                                                    <option key={index} value={hospital.name}>{hospital.name}</option>
-                                                ))}
-                                            </datalist> */}
                                         </div>
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="hospital">Name</label>
