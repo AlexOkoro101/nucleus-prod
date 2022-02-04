@@ -10,7 +10,7 @@ function OyoAgency() {
             </div>
             <div className="w-full">
                 <p className="font-extrabold text-3xl text-black mb-14">Are you a residence <br /> in Oyo state<br /> state?</p>
-                <p className="font-medium text-sm color-secondary mb-7">The Oyo state health  insurance agency have specially tailored health plans for all residents of Oyo state at affordable prices. </p>
+                <p className="font-medium text-sm text-black mb-7">The Oyo state health  insurance agency have specially tailored health plans for all residents of Oyo state at affordable prices. </p>
                 <Link to='/buy-cover' className="new-button2 rounded-xl text-sm inline-block">Get Started</Link>
             </div>
         </div>

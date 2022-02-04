@@ -15,9 +15,9 @@ function Ready() {
                 <div className="text-center">
                     <div className="header pb-10">
                         <p className="pt-9 font-extrabold text-3xl mb-1 text-white">Ready to Talk?</p>
-                        <p className="font-medium text-xs text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris</p>
+                        {/* <p className="font-medium text-xs text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris</p> */}
 
-                        <button onClick={() => history.push('/contact')} className="contact-us-btn">Contact Us</button>
+                        <button onClick={() => window.location.href = 'https://nucleusis.io/contact-us/'} className="contact-us-btn">Contact Us</button>
 
                         <p className="text-xl font-medium contact-stats">More that 1.5 million individuals use NucleusIS</p>
 

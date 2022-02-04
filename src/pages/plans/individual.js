@@ -343,8 +343,8 @@ function Individual() {
                                     </div>
                                 </div>
 
-                                <div className="mt-20 flex flex-col lg:flex-row gap-8 overflow-hidden">
-                                    <div className="flex flex-row lg:flex-col gap-2">
+                                <div className="mt-5 flex flex-col lg:flex-row gap-8 overflow-hidden">
+                                    <div className="flex flex-row gap-2">
                                         <div className="plan-price-box flex flex-col justify-center">
                                             <p className="text-sm text-white font-medium">Price</p>
                                             <p className="text-lg font-medium text-white">N{planDetails?.plan.planAmount.amount}</p>
@@ -378,7 +378,7 @@ function Individual() {
                                 </div>
 
 
-                                <h1 className="header mt-9 mb-10">Personal Details</h1>
+                                <h1 className="header mt-24 mb-5">Personal Details</h1>
 
                                 <div className="mb-10">
                                     <label htmlFor="photo"></label>
@@ -642,7 +642,7 @@ function Individual() {
                             </form>
 
                         ) : (
-                            <div className="confirm-cover-details lg:px-64 px-8 pt-28 bg-gray-100 font-primary">
+                            <div className="confirm-cover-details xl:px-64 lg:px-80 px-8 pt-28 bg-gray-100 font-primary">
                                 <div>
                                     <div className="mb-32 text-center">
                                         <div className="userdp overflow-hidden w-48 h-48 rounded-full bg-white border text-center inline-block">
@@ -652,11 +652,12 @@ function Individual() {
                                                 <p className="mt-16">No Image</p>
                                             )}
                                         </div>
-                                        <div>
-                                            <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
-                                        </div>
                                     </div>
 
+                                    <div className="text-center">
+                                        <h1 className="header mb-3">Plan Details</h1>
+                                        <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
+                                    </div>
                                     <table className="table-fixed w-full md:hidden block bg-white">
                                         <tbody className="w-full table">
                                             <tr className="">
