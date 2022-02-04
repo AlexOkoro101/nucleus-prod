@@ -453,9 +453,8 @@ function SMELoan() {
                                     </div>
                                 </div>
 
-
-                                <div className="mt-20 flex flex-col lg:flex-row gap-8 overflow-hidden">
-                                    <div className="flex flex-row lg:flex-col gap-2">
+                                <div className="mt-5 flex flex-col lg:flex-row gap-8 overflow-hidden">
+                                    <div className="flex flex-row gap-2">
                                         <div className="plan-price-box flex flex-col justify-center">
                                             <p className="text-sm text-white font-medium">Price</p>
                                             <p className="text-lg font-medium text-white">N{planDetails?.plan.planAmount.amount}</p>
@@ -488,7 +487,7 @@ function SMELoan() {
 
                                 </div>
 
-                                <h1 className="header mt-9 mb-10">Personal Details</h1>
+                                <h1 className="header mt-24 mb-10">Personal Details</h1>
 
                                 <div className="mb-10">
                                     <label htmlFor="photo"></label>
