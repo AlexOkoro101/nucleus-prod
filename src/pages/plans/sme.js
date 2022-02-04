@@ -286,7 +286,7 @@ function SME() {
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>D.O.B</label>
-                                                    <DatePicker {...register(`enrollees.${index}.enrolleeDob`, {value: enrolleeDob, onChange: (date) => setenrolleeDob(date)})} selected={enrolleeDob} onChange={(date) => setenrolleeDob(date)} className="entity-dob" />
+                                                    <DatePicker {...register(`enrollees.${index}.enrolleeDob`, {value: enrolleeDob, onChange: (date) => setenrolleeDob(date)})} selected={enrolleeDob} onChange={(date) => setenrolleeDob(date)} className="entity-dob" showYearDropdown scrollableYearDropdown yearDropdownItemNumber={40} />
                                                 </div>
                                             </div>
 

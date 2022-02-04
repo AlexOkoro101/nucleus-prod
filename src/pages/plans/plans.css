@@ -34,11 +34,11 @@
 }
 .individual-btn {
     background: #663391;
-    border-radius: 30px;
+    border-radius: 0.75rem;
     font-weight: bold;
     font-size: 16px;
     color: #FFFFFF;
-    padding: 11px 31px;
+    padding: 11px 26px;
 }
 .form .tab-content {
     width: 100%;

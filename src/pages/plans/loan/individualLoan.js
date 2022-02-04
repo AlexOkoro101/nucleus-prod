@@ -537,7 +537,7 @@ function IndividualLoan() {
                                         </div>
                                         <div className="flex flex-col flex-1">
                                             <label htmlFor="dob">D.O.B</label>
-                                            <DatePicker selected={dob} onChange={(date) => setdob(date)} className="entity-dob" />
+                                            <DatePicker selected={dob} onChange={(date) => setdob(date)} className="entity-dob" showYearDropdown scrollableYearDropdown yearDropdownItemNumber={40} />
                                             {/* <input value={dob} onChange={(e) => setdob(e.target.value)} className="input-primary px-6 focus:outline-none" type="text" name="dob" id="dob" /> */}
                                         </div>
                                         <div className="flex flex-col flex-1">
@@ -617,7 +617,7 @@ function IndividualLoan() {
                                                 <div className="flex flex-col  lg:w-4/12">
                                                     <label htmlFor="condition-duration">Date of Diagnosis</label>
                                                     {/* <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" value={conditionDuration} onChange={(e) => setconditionDuration(e.target.value)} /> */}
-                                                    <DatePicker selected={conditionDuration} onChange={(date) => setconditionDuration(date)} className="entity-dob" />
+                                                    <DatePicker selected={conditionDuration} onChange={(date) => setconditionDuration(date)} className="entity-dob" showYearDropdown scrollableYearDropdown yearDropdownItemNumber={40} />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label htmlFor="condition-medication">Current Medication</label>
@@ -667,7 +667,7 @@ function IndividualLoan() {
                                                 <div className="flex flex-col flex-1">
                                                     <label>D.O.B</label>
                                                     {/* <input {...register(`dependants.${index}.dependantDob`)} className="input-primary px-6 focus:outline-none" type="text" /> */}
-                                                    <DatePicker {...register(`dependants.${index}.dependantDob`, {value: dob, onChange: (date) => setdependantDob(date)})} selected={dependantDob} onChange={(date) => setdependantDob(date)} className="entity-dob" />
+                                                    <DatePicker {...register(`dependants.${index}.dependantDob`, {value: dob, onChange: (date) => setdependantDob(date)})} selected={dependantDob} onChange={(date) => setdependantDob(date)} className="entity-dob" showYearDropdown scrollableYearDropdown yearDropdownItemNumber={40} />
                                                 </div>
                                                 <div className="flex flex-col flex-1">
                                                     <label>Email</label>
@@ -731,7 +731,7 @@ function IndividualLoan() {
                                                     <div className="flex flex-col  lg:w-4/12">
                                                         <label htmlFor="condition-duration">Date of Diagnosis</label>
                                                         {/* <input name="condition-duration" id="condition-duration" className="input-primary px-6 focus:outline-none" {...register(`dependants.${index}.conditionDuration`)} /> */}
-                                                        <DatePicker {...register(`dependants.${index}.dependantConditionDuration`, {value: dependantConditionDuration, onChange: (date) => setdependantConditionDuration(date)})} selected={dependantConditionDuration} onChange={(date) => setdependantConditionDuration(date)} className="entity-dob" />
+                                                        <DatePicker {...register(`dependants.${index}.dependantConditionDuration`, {value: dependantConditionDuration, onChange: (date) => setdependantConditionDuration(date)})} selected={dependantConditionDuration} onChange={(date) => setdependantConditionDuration(date)} className="entity-dob" showYearDropdown scrollableYearDropdown yearDropdownItemNumber={40} />
                                                     </div>
                                                     <div className="flex flex-col flex-1">
                                                         <label htmlFor="condition-medication">Current Medication</label>
