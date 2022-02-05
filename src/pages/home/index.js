@@ -18,9 +18,9 @@ function Home() {
         <div className="home font-primary">
             <div className="home-banner">
                 <div className="banner-content flex flex-col justify-center lg:px-64 md:pt-40 md:pb-40 px-8 pt-20 pb-32 sm:pt-20 sm:pb-40 text-center">
-                    <h1 className="text-white lg:text-4xl text-2xl font-extrabold">Have access and buy health plans  </h1>
-                    <h1 className="text-white lg:text-4xl text-2xl font-extrabold mb-16">from Top HMOs in <span style={{color: "#ffea2f"}}>One Place</span></h1>
-                    <Link to='/buy-cover' className="new-button w-40 mx-auto rounded-xl inline-block">Learn More</Link>
+                    <h1 className="text-white lg:text-3xl text-2xl font-extrabold">Buy affordable health insurance products <br />  across Africa for  </h1>
+                    <h1 className="text-white lg:text-3xl text-2xl font-extrabold mb-16">YOU, YOUR FAMILY, YOUR DEPENDANTS <br /> and <span style={{color: "#ffea2f"}}>YOUR EMPLOYEES</span></h1>
+                    {/* <Link to='/buy-cover' className="new-button w-40 mx-auto rounded-xl inline-block">Learn More</Link> */}
                     {/* <p className="text-white text-sm mb-6">Get affordable health insurance products across Africa for YOU, YOUR FAMILY, YOUR DEPENDANTS and YOUR EMPLOYEES</p> */}
 
                     {/* <div className="home-buttons flex mb-5 gap-x-5">
@@ -43,8 +43,8 @@ function Home() {
 
                     <div className="bg-white shadow-lg rounded-3xl text-center p-8 service-item">
                         <img src={image2} alt="" className="inline mb-4" />
-                        <p className="font-bold text-2xl line leading-6">I already have</p>
-                        <p className="mb-3 font-bold text-2xl leading-6"> a health plan</p>
+                        <p className="font-bold text-2xl line leading-6">I have an expiring</p>
+                        <p className="mb-3 font-bold text-2xl leading-6"> health plan</p>
                         <p className="font-medium text-xs">Go on and click the button <br /> below to renew your plan </p>
                         <Link to='/buy-cover/renew' className="new-button2 mt-8 rounded-xl m-auto text-sm inline-block">Renew Plan</Link>
                     </div>
@@ -53,7 +53,7 @@ function Home() {
                         <img src={image3} alt="" className="inline mb-4" />
                         <p className="font-bold text-2xl line leading-6">I can't afford</p>
                         <p className="mb-3 font-bold text-2xl leading-6"> a health plan</p>
-                        <p className="font-medium text-xs">Don’t worry much, just click <br /> on the button below, buy and paylater</p>
+                        <p className="font-medium text-xs">Don’t worry much, click  on <br /> the button below to buy and pay later</p>
                         <Link  onClick={() => localStorage.setItem('type', 'loan')} to='/buy-cover' className="new-button2 mt-8 rounded-xl m-auto text-sm inline-block">Get Now, Pay Later</Link>
                     </div>
                 </div>

@@ -774,9 +774,11 @@ function IndividualLoan() {
                                                 <p className="mt-16">No Image</p>
                                             )}
                                         </div>
-                                        <div>
-                                            <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
-                                        </div>
+                                    </div>
+
+                                    <div className="text-center mb-16">
+                                        <h1 className="header mb-3">Plan Details</h1>
+                                        <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
                                     </div>
 
                                     <table className="table-fixed w-full md:hidden block bg-white">

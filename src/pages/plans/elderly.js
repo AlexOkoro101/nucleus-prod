@@ -643,7 +643,7 @@ function Elderly() {
                         ) : (
                             <div className="confirm-cover-details lg:px-64 px-8 pt-28 bg-gray-100 font-primary">
                                 <div>
-                                    <div className="mb-32 text-center">
+                                    <div className="mb-16 text-center">
                                         <div className="userdp overflow-hidden w-48 h-48 rounded-full bg-white border text-center inline-block">
                                             {imgData ? (
                                             <img src={imgData} alt="db" className="w-full h-full object-cover" />
@@ -654,6 +654,11 @@ function Elderly() {
                                         <div>
                                             <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
                                         </div>
+                                    </div>
+
+                                    <div className="text-center mb-16">
+                                        <h1 className="header mb-3">Plan Details</h1>
+                                        <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
                                     </div>
 
                                     <table className="table-fixed w-full md:hidden block bg-white">
