@@ -18,7 +18,7 @@ function Home() {
         <div className="home font-primary">
             <div className="home-banner">
                 <div className="banner-content flex flex-col justify-center lg:px-64 md:pt-40 md:pb-40 px-8 pt-20 pb-32 sm:pt-20 sm:pb-40 text-center">
-                    <h1 className="text-white lg:text-3xl text-2xl font-extrabold">Buy affordable health insurance products <br />  across Africa for  </h1>
+                    <h1 className="text-white lg:text-3xl text-2xl font-extrabold">Buy affordable health insurance <br /> products across Africa for </h1>
                     <h1 className="text-white lg:text-3xl text-2xl font-extrabold mb-16">YOU, YOUR FAMILY, YOUR DEPENDANTS <br /> and <span style={{color: "#ffea2f"}}>YOUR EMPLOYEES</span></h1>
                     {/* <Link to='/buy-cover' className="new-button w-40 mx-auto rounded-xl inline-block">Learn More</Link> */}
                     {/* <p className="text-white text-sm mb-6">Get affordable health insurance products across Africa for YOU, YOUR FAMILY, YOUR DEPENDANTS and YOUR EMPLOYEES</p> */}
