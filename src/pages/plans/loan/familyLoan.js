@@ -158,16 +158,18 @@ function FamilyLoan() {
         setdependentArray(data?.dependants.map(person => ({ 
             dependantFirstName: person.dependantFirstName,
             dependantLastName: person.dependantLastName,
+            dependantMiddleName: person.dependantMiddleName,
             dependantEmail: person.dependantEmail,
             dependantPhoneNumber: person.dependantPhoneNumber,
             dependantGender: person.dependantGender,
             dependantDob: person.dependantDob.toLocaleDateString(),
             dependantAddress: person.dependantAddress,
             dependantHospital: person.dependantHospital,
+            dependantHospitalAddress: person.dependantHospitalAddress,
             dependantExistingConditions: person.existingCondition,
             dependantCondition: {
                 healthCondition: person.healthCondition,
-                healthConditionDuration: person.dependantConditionDuration.toLocaleDateString(),
+                healthConditionDuration: person?.dependantConditionDuration,
                 healthConditionMedication: person.conditionMedication
             }
 
@@ -427,6 +429,11 @@ function FamilyLoan() {
         })
         // console.log(newArray);
         sethospitalArray(newArray);
+    }
+
+    const goBack = () => {
+        setinitialPageName("Family Loan Plan")
+        setconfrimDetail(1)
     }
 
     //End of Functions
@@ -814,6 +821,41 @@ function FamilyLoan() {
                                             <tr>
                                                 <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-lg text-base">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
                                             </tr>
+
+                                            {dependentArray.length && (
+                                                <>
+                                                {dependentArray.map((dependent, index) => (
+                                                    <>
+                                                    <tr className="bg-gray-300">
+                                                        <td className="p-3 font-semibold text-lg" colSpan="3">Dependant Details - {index + 1}</td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantFirstName}</span>  </td>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantLastName}</span> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantMiddleName}</span> </td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantGender}</span> </td>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantDob}</span> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantEmail}</span> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantPhoneNumber}</span> </td>
+                                                        <td colSpan="2" className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantAddress}</span> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-sm">Hospital Location</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantHospitalAddress}</span> </td>
+                                                        <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Hospital Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantHospital}</span> </td>
+                                                    </tr>
+                                                    </> 
+                                                ))}
+
+                                                </>
+                                            )}
                                         </tbody>
                                     </table>
 
@@ -843,10 +885,42 @@ function FamilyLoan() {
                                             <tr>
                                                 <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
                                             </tr>
+
+                                            {dependentArray.length && (
+                                                <>
+                                                {dependentArray.map((dependent, index) => (
+                                                    <>
+                                                    <tr className="bg-gray-300">
+                                                        <td className="p-3 font-semibold text-lg" colSpan="3">Dependant Details - {index + 1}</td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantFirstName}</span>  </td>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantLastName}</span> </td>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Middle Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantMiddleName}</span> </td>
+                                                    </tr>
+                                                    <tr className="">
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantGender}</span> </td>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantDob}</span> </td>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantEmail}</span> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantPhoneNumber}</span> </td>
+                                                        <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantAddress}</span> </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-lg text-sm">Hospital Location</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantHospitalAddress}</span> </td>
+                                                        <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Hospital Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dependantHospital}</span> </td>
+                                                    </tr>
+                                                    </> 
+                                                ))}
+
+                                                </>
+                                            )}
                                         </tbody>
                                     </table>
 
-                                    <div>
+                                    <div className="flex gap-4">
+                                        <input type="button" value="back" className="back-btn cursor-pointer mt-14 mb-14 uppercase" onClick={goBack} />
                                         <button 
                                         onClick={() => {
                                         buyPlan()

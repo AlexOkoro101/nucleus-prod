@@ -200,6 +200,13 @@ function SME() {
         })
         .catch(error => console.log('error', error));
     }
+
+    const goBack = () => {
+        setinitialPageName("SME")
+        setconfrimDetail(false)
+    }
+
+
     return (
         <div>
             <Banner bannerHeader={initialPageName}></Banner>
@@ -445,6 +452,38 @@ function SME() {
                                     <tr>
                                         <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold text-lg">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
                                     </tr>
+
+                                    {enrolleeArray.length && (
+                                        <>
+                                        {enrolleeArray.map((dependent, index) => (
+                                            <>
+                                            <tr className="bg-gray-300">
+                                                <td className="p-3 font-semibold text-lg" colSpan="3">Enrollee Details - {index + 1}</td>
+                                            </tr>
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeFirstName}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeLastName}</span> </td>
+                                            </tr>
+                                            
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeGender}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeDob}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td colSpan="2" className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeEmail}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleePhone}</span> </td>
+                                                <td colSpan="2" className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeAddress}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200"  colSpan="3"><span className="color-primary font-semibold md:text-lg text-sm">Hospital Location</span>  <br /> <span className="text-black font-medium text-lg">{dependent.enrolleeHospital}</span> </td>
+                                            </tr>
+                                            </> 
+                                        ))}
+
+                                        </>
+                                    )}
                                 </tbody>
                             </table>
 
@@ -464,10 +503,42 @@ function SME() {
                                     <tr>
                                         <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold text-lg">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
                                     </tr>
+
+                                    {enrolleeArray.length && (
+                                        <>
+                                        {enrolleeArray.map((dependent, index) => (
+                                            <>
+                                            <tr className="bg-gray-300">
+                                                <td className="p-3 font-semibold text-lg" colSpan="3">Enrollee Details - {index + 1}</td>
+                                            </tr>
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">First Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.firstname}</span>  </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Last Name</span>  <br /> <span className="text-black font-medium text-lg">{dependent.lastname}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Gender</span>  <br /> <span className="text-black font-medium text-lg">{dependent.gender}</span> </td>
+                                            </tr>
+                                            
+                                            <tr className="">
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">D.O.B</span>  <br /> <span className="text-black font-medium text-lg">{dependent.dob}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Phone Number</span>  <br /> <span className="text-black font-medium text-lg">{dependent.phone}</span> </td>
+                                                <td className="p-4 border border-gray-200"><span className="color-primary font-semibold md:text-base text-sm">Email</span>  <br /> <span className="text-black font-medium text-lg">{dependent.email}</span> </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td colSpan="2" className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Address</span>  <br /> <span className="text-black font-medium text-lg">{dependent.address}</span> </td>
+                                            </tr>
+                                            <tr>
+                                                <td className="p-4 border border-gray-200"  colSpan="3"><span className="color-primary font-semibold md:text-lg text-sm">Hospital Location</span>  <br /> <span className="text-black font-medium text-lg">{dependent.hospital}</span> </td>
+                                            </tr>
+                                            </> 
+                                        ))}
+
+                                        </>
+                                    )}
                                 </tbody>
                             </table>
 
-                            <div>
+                            <div className="flex gap-4">
+                                <input type="button" value="back" className="back-btn cursor-pointer mt-14 mb-14 uppercase" onClick={goBack} />
                                 <button 
                                 onClick={() => {
                                 buyPlan()
