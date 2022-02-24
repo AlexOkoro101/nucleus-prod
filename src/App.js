@@ -22,6 +22,18 @@ import ElderlyLoan from "./pages/plans/loan/elderlyLoan";
 import FamilyLoan from "./pages/plans/loan/familyLoan";
 import SMELoan from "./pages/plans/loan/smeLoan";
 
+//Lagos
+import IndividualLagos from "./pages/plans/lagos-plans/individual";
+import SMELagos from "./pages/plans/lagos-plans/sme";
+import FamilyLagos from "./pages/plans/lagos-plans/family";
+import ElderlyLagos from "./pages/plans/lagos-plans/elderly";
+
+//Oyo
+import IndividualOyo from "./pages/plans/oyo-plans/individual";
+import FamilyOyo from "./pages/plans/oyo-plans/family";
+import ElderlyOyo from "./pages/plans/oyo-plans/elderly";
+import SMEOyo from "./pages/plans/oyo-plans/sme";
+
 function App() {
 
   return (
@@ -58,6 +70,8 @@ function App() {
               <RenewCover></RenewCover>
             </Route>
 
+
+            {/* Loan Route */}
             <Route path="/buy-cover/individual-loan">
               <IndividualLoan></IndividualLoan>
             </Route>
@@ -70,6 +84,37 @@ function App() {
             <Route path="/buy-cover/sme-loan">
               <SMELoan></SMELoan>
             </Route>
+
+            
+            {/* Lagos Route*/}
+            <Route path="/buy-cover/lagos/individual">
+              <IndividualLagos></IndividualLagos>
+            </Route>
+            <Route path="/buy-cover/lagos/family">
+              <FamilyLagos></FamilyLagos>
+            </Route>
+            <Route path="/buy-cover/lagos/elderly">
+              <ElderlyLagos></ElderlyLagos>
+            </Route>
+            <Route path="/buy-cover/lagos/sme">
+              <SMELagos></SMELagos>
+            </Route>
+
+
+            {/* OYO Route*/}
+            <Route path="/buy-cover/oyo/individual">
+              <IndividualOyo></IndividualOyo>
+            </Route>
+            <Route path="/buy-cover/oyo/family">
+              <FamilyOyo></FamilyOyo>
+            </Route>
+            <Route path="/buy-cover/oyo/elderly">
+              <ElderlyOyo></ElderlyOyo>
+            </Route>
+            <Route path="/buy-cover/oyo/sme">
+              <SMEOyo></SMEOyo>
+            </Route>
+            
 
             {/* Transaction */}
             <Route exact path="/payment/success">

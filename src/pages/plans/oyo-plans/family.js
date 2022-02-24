@@ -5,16 +5,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import Banner from './shared/banner'
-import user from '../../assets/img/vector.svg'
-import './plans.css'
-import { enviroment } from '../../components/shared/enviroment'
+import Banner from '../shared/banner'
+import user from '../../../assets/img/vector.svg'
+import '../plans.css'
+import { enviroment } from '../../../components/shared/enviroment'
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { useHistory } from 'react-router-dom';
 var Spinner = require('react-spinkit');
 
 
-function Individual() {
+function FamilyOyo() {
     //Routing
     const history = useHistory();
     const { control, register, handleSubmit } = useForm();
@@ -42,7 +42,7 @@ function Individual() {
     //Hooks
     const [confrimDetail, setconfrimDetail] = useState(false)
     const [planDetails, setplanDetails] = useState(null)
-    const [initialPageName, setinitialPageName] = useState("Individual Plan")
+    const [initialPageName, setinitialPageName] = useState("Family Plan")
 
 
     const [isloading, setisloading] = useState(false)
@@ -74,16 +74,18 @@ function Individual() {
     const [dependantDob, setdependantDob] = useState(new Date())
     const [dependantConditionDuration, setdependantConditionDuration] = useState(new Date())
     // console.log(new Date().toLocaleDateString())
+
+    const [planName, setplanName] = useState(null)
+    const [planAmount, setplanAmount] = useState(null)
+    const [planTenure, setplanTenure] = useState(null)
+    const [planBenefits, setplanBenefits] = useState(null)
+    const [planLocations, setplanLocations] = useState(null)
+    const [planProviders, setplanProviders] = useState(null)
     
 
 
 
-    useEffect(() => {
-        getPlanDetails()
-        return () => {
-            getPlanDetails()
-        }
-    }, [])
+    useEffect(() => getPlanDetails(), [])
     //End of Hooks
 
 
@@ -124,7 +126,7 @@ function Individual() {
         }
         // e.preventDefault()
         console.log(data?.dependants)
-        console.log(control)
+        
         setdependentArray(data?.dependants.map(person => ({ 
             dependantFirstName: person.dependantFirstName,
             dependantLastName: person.dependantLastName,
@@ -157,7 +159,7 @@ function Individual() {
         seterror(false)
 
         var myHeaders = new Headers();
-        myHeaders.append("Authorization", `Bearer ${enviroment.API_KEY}`);
+        myHeaders.append("Authorization",  `Bearer ${enviroment.API_KEY}`);
 
         var requestOptions = {
         method: 'GET',
@@ -165,17 +167,20 @@ function Individual() {
         redirect: 'follow'
         };
 
-        fetch(enviroment.BASE_URL + "plans/22", requestOptions)
+        fetch(enviroment.BASE_URL + "plans?insurer=4", requestOptions)
         .then(response => response.json())
         .then(result => {
             setisloading(false)
             console.log(result)
             setplanDetails(result.data)
+            setplanName(result.data[0].planName)
+            setplanAmount(result.data[0].planAmount.amount)
+            setplanTenure(result.data[0].planTenure)
+            setplanBenefits(result.data[0].planBenefits)
+            setplanLocations(result.data[0]?.locations)
+            setplanProviders(result.data[0]?.providers)
         })
-        .catch(error => {
-            console.log('error', error)
-            seterror(error)
-        });
+        .catch(error => console.log('error', error));
     }
 
     // const addDependants = () => {
@@ -313,8 +318,8 @@ function Individual() {
 
     const sethospitalDetail = (val) => {
         // console.log(val);
-        const newArray = planDetails.providers.filter((provider) => {
-            return provider.location == val
+        const newArray = planProviders?.filter((provider) => {
+            return provider?.location == val
         })
         // console.log(newArray);
         sethospitalArray(newArray);
@@ -323,6 +328,19 @@ function Individual() {
     const goBack = () => {
         setinitialPageName("Individual Plan")
         setconfrimDetail(false)
+    }
+
+    const changeSelect = (e) => {
+        // console.log(e.target.value)
+        planDetails.filter((plan) => {
+            if(plan.planName == e.target.value) {
+                console.log(plan)
+                setplanAmount(plan.planAmount.amount)
+                setplanBenefits(plan.planBenefits)
+                setplanTenure(plan.planTenure)
+                setplanName(plan.planName)
+            }
+        })
     }
 
 
@@ -343,23 +361,25 @@ function Individual() {
                     <div className="form">
                         {!confrimDetail ? (
                             <form onSubmit={handleSubmit(submitForm)} className="lg:px-64 px-8 pt-28 font-primary">
-                                <h1 className="header mb-3">Plan Details</h1>
+                                <h1 className="header mb-3">Choose Plan</h1>
                                 <div>
-                                    <div className="flex input-primary w-full px-6 outline-none focus:outline-none items-center">
-                                        {planDetails?.plan.planName}
-                                    </div>
+                                    <select className="px-6 focus:outline-none w-full" onChange={(e) => changeSelect(e)}>
+                                        {planDetails?.map((plan) => (
+                                            <option key={plan.id} value={plan.planName}>{plan.planName}</option>
+                                        ))}
+                                    </select>
                                 </div>
 
                                 <div className="mt-5 flex flex-col lg:flex-row gap-8 overflow-hidden">
                                     <div className="flex flex-row gap-2">
                                         <div className="plan-price-box flex flex-col justify-center">
                                             <p className="text-sm text-white font-medium">Price</p>
-                                            <p className="text-lg font-medium text-white">N{planDetails?.plan.planAmount.amount}</p>
+                                            <p className="text-lg font-medium text-white">N{planAmount}</p>
                                         </div>
                                         
                                         <div className="plan-duration-box flex flex-col justify-center">
                                             <p className="text-sm text-white font-medium">Plan Duration</p>
-                                            <p className="text-lg font-medium text-white">{planDetails?.plan.planTenure}</p>
+                                            <p className="text-lg font-medium text-white">{planTenure}</p>
                                         </div>
                                     </div>
                                     <div className="md:max-w-none bg-white px-8 md:px-5 py-8 md:py-0 mb-3 mx-0 md:-mx-3 md:mb-0 md:relative md:flex md:flex-col lg:border-l lg:h-32 lg:border-t-0 border-t">
@@ -368,16 +388,16 @@ function Individual() {
                                             {/* <h3 className="text-center font-bold text-4xl md:text-5xl mb-4">N19,900<span className="text-lg">/yr</span></h3> */}
                                             
                                             <ul className="text-xs mb-8 plan-detail flex flex-wrap gap-x-4">
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.general_consulation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.general_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>General Consultation</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.glasses ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.glasses ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Glasses Specialist</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.specialist_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.specialist_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Consultation</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.paedetrics ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.paedetrics ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Paediatrics</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.mental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.mental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Mental Care</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.admission ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.admission ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Admission</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.fertility_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.fertility_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Fertility Care</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.antenatal_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.antenatal_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Antenatal Care</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.optical_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.optical_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Optical Care</span> </li>
-                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planDetails?.plan.planBenefits.dental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planDetails?.plan.planBenefits.dental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Dental Care</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.general_consulation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.general_consulation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>General Consultation</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.glasses ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.glasses ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Glasses Specialist</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.specialist_consultation ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.specialist_consultation ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Consultation</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.paedetrics ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.paedetrics ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Paediatrics</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.mental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.mental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Mental Care</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.admission ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.admission ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Admission</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.fertility_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.fertility_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Fertility Care</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.antenatal_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.antenatal_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Antenatal Care</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.optical_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.optical_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Optical Care</span> </li>
+                                                <li className="leading-tight items-center flex mb-2 gap-x-1"><svg className="w-6 h-6" fill="none" stroke={planBenefits?.dental_care ? "#00B252" : "#f00"} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={planBenefits?.dental_care ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"}></path></svg> <span>Dental Care</span> </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -450,8 +470,8 @@ function Individual() {
                                             <label htmlFor="location">Location</label>
                                             <select name="state" id="state" className="px-6 focus:outline-none" onChange={(e) => sethospitalDetail(e.target.value)}>
                                                 <option>Select Location</option>
-                                                {planDetails?.locations.map((state, index) => (
-                                                    <option key={index} value={state.location}>{state.location}</option>
+                                                {planLocations?.map((state, index) => (
+                                                    <option key={index} value={state?.location}>{state?.location}</option>
                                                 ))}
                                             </select>
                                         </div>
@@ -459,8 +479,8 @@ function Individual() {
                                             <label htmlFor="hospital">Name</label>
                                             <input value={hospital} onChange={(e) => sethospital(e.target.value)}  onBlur={populateAddress} className="input-primary px-6 focus:outline-none" type="text" name="hospital-name" id="hospital-name" list="hospital" />
                                             <datalist id="hospital">
-                                                {hospitalArray.map((hospital, index) => (
-                                                    <option key={index} value={hospital.name}>{hospital.name}</option>
+                                                {hospitalArray?.map((hospital, index) => (
+                                                    <option key={index} value={hospital?.name}>{hospital?.name}</option>
                                                 ))}
                                             </datalist>
                                         </div>
@@ -468,8 +488,8 @@ function Individual() {
                                             <label htmlFor="hospital">Address</label>
                                             <input value={hospitalAddress} onChange={(e) => sethospitalAddress(e.target.value)}  className="input-primary px-6 focus:outline-none" type="text" list="hospitalAddress" name="hospitalAddress" id="hospitalAddress-list" />
                                             <datalist id="hospitalAddress">
-                                                {hospitalArray.map((hospital, index) => (
-                                                    <option key={index} value={hospital.address}>{hospital.address}</option>
+                                                {hospitalArray?.map((hospital, index) => (
+                                                    <option key={index} value={hospital?.address}>{hospital?.address}</option>
                                                 ))}
                                             </datalist>
                                         </div>
@@ -664,7 +684,7 @@ function Individual() {
 
                                     <div className="text-center mb-16">
                                         <h1 className="header mb-3">Plan Details</h1>
-                                        <p className="text-2xl font-medium">{planDetails?.plan.planName}</p>
+                                        <p className="text-2xl font-medium">{planName}</p>
                                     </div>
                                     <table className="table-fixed w-full md:hidden block bg-white">
                                         <tbody className="w-full table">
@@ -696,7 +716,7 @@ function Individual() {
                                                 <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-lg text-base">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{hospital}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-lg text-base">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-lg text-base">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planAmount}</span> </td>
                                             </tr>
                                             {dependentArray.length >= 1 && (
                                                 <>
@@ -759,7 +779,7 @@ function Individual() {
                                                 <td className="p-4 border border-gray-200" colSpan="2"><span className="color-primary font-semibold md:text-base text-sm">Hospital</span>  <br /> <span className="text-black font-medium text-lg">{hospital}</span> </td>
                                             </tr>
                                             <tr>
-                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planDetails?.plan.planAmount.amount}</span> </td>
+                                                <td className="p-4 border border-gray-200" colSpan="3"><span className="color-primary font-semibold md:text-base text-sm">Price</span>  <br /> <span className="text-black font-medium text-lg">N{planAmount}</span> </td>
                                             </tr>
 
                                             {dependentArray.length >= 1 && (
@@ -818,4 +838,4 @@ function Individual() {
     )
 }
 
-export default Individual
+export default FamilyOyo
